@@ -1,0 +1,29 @@
+{% extends 'stock/base.html' %}
+
+{%load plotly_dash%}
+
+{% block content %}
+
+<h3>Current Stocks:</h3>
+
+<ul>
+    {% for stock in stocks %}
+    <li>
+        <a href="{% url 'viewstock' stock.id %}">
+        {{ stock.ticker }} - {{ stock.type }} - {{ stock.volume }} units - {{ stock.date }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'createstock' %}" class="btn btn-primary">Add Transaction</a>
+
+<div class="{%plotly_class name="ticker"%}">
+    {% for stock in stocks %}
+
+    {% endfor %}
+
+    {% plotly_app ratio=1 name="ticker" %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'stock/base.html' %}
+
+{% block content %}
+
+<h1>Register Transaction</h1>
+
+<h3>{{ error }}</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}
