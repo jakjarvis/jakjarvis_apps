@@ -24,7 +24,7 @@ app.layout = html.Div([
     html.Div([html.H3('Enter a stock symbol:', style={'paddingRight':'30px'}),
               dcc.Dropdown(id='my_stock_picker',
                         options = options,
-                        value=['TSLA'],
+                        value='TSLA',
                         multi = True)
               ], style={'display':'inline-block','verticalAlign':'top', 'width':'30%'}),
     html.Div([html.H3('Select a start and end date:'),

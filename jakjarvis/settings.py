@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'stock',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -74,6 +75,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'jakjarvis.wsgi.application'
+ASGI_APPLICATION = "jakjarvis.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases

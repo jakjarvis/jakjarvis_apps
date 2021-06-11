@@ -15,8 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from stock import views
-from . import ticker
+from stock import views, ticker
 
 urlpatterns = [
     path('admin/', admin.site.urls),

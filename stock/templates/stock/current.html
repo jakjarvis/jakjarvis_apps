@@ -18,12 +18,11 @@
 
 <a href="{% url 'createstock' %}" class="btn btn-primary">Add Transaction</a>
 
-<div class="{%plotly_class name="ticker"%}">
-    {% for stock in stocks %}
-
-    {% endfor %}
-
-    {% plotly_app ratio=1 name="ticker" %}
+<div class="{%plotly_class name='ticker'%}">
+    {{ stock_ticker }}
+    {% plotly_app ratio=1 initial_arguments='{"my_stock_picker": {"value":stock_ticker}}' name="ticker"%}
 </div>
 
 {% endblock %}
+
+<!-- initial_arguements='{'my_stock_picker': {'value':stock_ticker}}' -->

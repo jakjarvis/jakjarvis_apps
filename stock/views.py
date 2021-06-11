@@ -5,6 +5,7 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import StockForm
 from .models import Stock
+from django_plotly_dash.consumers import send_to_pipe_channel
 
 def home(request):
     return render(request, 'stock/home.html')
@@ -27,7 +28,14 @@ def signupuser(request):
 
 def currentstocks(request):
     stocks = Stock.objects.filter(user=request.user)
-    return render(request, 'stock/current.html', {'stocks':stocks})
+
+    stock_ticker = []
+    stocks_list = stocks.values('ticker')
+    for stock in stocks_list:
+        stock_ticker += stock.values()
+    print(stock_ticker)
+
+    return render(request, 'stock/current.html', {'stocks':stocks, 'stock_ticker':stock_ticker})
 
 def loginuser(request):
     if request.method == "GET":
