@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<h3>Current Stocks:</h3>
+<h3>Portfolio page</h3>
 
 <ul>
     {% for stock in stocks %}
@@ -20,9 +20,10 @@
 
 <div class="{%plotly_class name='ticker'%}">
     {{ stock_ticker }}
-    {% plotly_app ratio=1 initial_arguments='{"my_stock_picker": {"value":stock_ticker}}' name="ticker"%}
+    json.loads{{ stock_ticker }}
+    {% plotly_app ratio=1 name="ticker" initial_arguments='{"my_stock_picker":{"value":"[AAPL]"}}' %}
 </div>
 
 {% endblock %}
 
-<!-- initial_arguements='{'my_stock_picker': {'value':stock_ticker}}' -->
+<!-- initial_arguments='{'my_stock_picker': {'value':stock_ticker}}' -->

@@ -1,0 +1,47 @@
+{% extends 'stock/base.html' %}
+
+{%load plotly_dash%}
+
+{% block content %}
+
+<h3>Portfolio page</h3>
+
+<a href="{% url 'createstock' %}" class="btn btn-primary">Add Transaction</a>
+
+<br>
+
+<div class="{%plotly_class name='ticker'%}">
+    {% plotly_app ratio=0.5 name="ticker" initial_arguments=stock_ticker %}
+</div>
+
+<div class="container">
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th>Stock</th>
+        <th>Total_held</th>
+        <th>Av_Buy_Price</th>
+        <th>Total_Spent</th>
+        <th>Total_Return</th>
+        <th>Current Value</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!-- jinja2 Technique -->
+    {% if data %}
+    {% for i in data %}
+      <tr>
+        <td>{{i.Ticker}}</td>
+        <td>{{i.Total_held}}</td>
+        <td>{{i.Av_Buy_Price}}</td>
+        <td>{{i.Total_Spent}}</td>
+        <td>{{i.Total_Return}}</td>
+        <td>{{i.Current_Value}}</td>
+      </tr>
+    {% endfor %}
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

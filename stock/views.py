@@ -5,7 +5,9 @@ from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import StockForm
 from .models import Stock
-from django_plotly_dash.consumers import send_to_pipe_channel
+import stock.stock_evaluation as stock_evaluation
+import json
+import pandas as pd
 
 def home(request):
     return render(request, 'stock/home.html')
@@ -19,7 +21,7 @@ def signupuser(request):
                 user = User.objects.create_user(request.POST['username'], 'na', request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('currentstocks')
+                return redirect('portfolio')
             except IntegrityError:
                 return render(request, 'stock/signupuser.html',
                               {'form': UserCreationForm(), 'error': 'That Username is taken - try a new one.'})
@@ -33,9 +35,24 @@ def currentstocks(request):
     stocks_list = stocks.values('ticker')
     for stock in stocks_list:
         stock_ticker += stock.values()
-    print(stock_ticker)
+    unique_stocks = list(set(stock_ticker))
 
-    return render(request, 'stock/current.html', {'stocks':stocks, 'stock_ticker':stock_ticker})
+    return render(request, 'stock/portfolio.html',
+                  {'stocks': stocks, "stock_ticker": {"my_stock_picker": {"value": unique_stocks}}})
+
+def portfolio(request):
+    stocks = Stock.objects.filter(user=request.user)
+    #unique_stocks = stock_evaluation.stock_ticker(stocks)
+    unique_stocks = stock_evaluation.portfolio_dataframe(stocks).index.tolist()
+    average_prices = stock_evaluation.portfolio_dataframe(stocks)['Av_Buy_Price'].tolist()
+
+    portfolio = stock_evaluation.portfolio_dataframe(stocks).reset_index().rename(columns={'index':'Ticker'})
+    print(portfolio)
+    json_portfolio = portfolio.to_json(orient='records')
+    data = []
+    data = json.loads(json_portfolio)
+
+    return render(request, 'stock/portfolio.html', {'stocks':stocks, "stock_ticker":{"my_stock_picker":{"value":unique_stocks}, "my_prices":{"value":average_prices}}, "data":data})
 
 def loginuser(request):
     if request.method == "GET":
@@ -46,7 +63,7 @@ def loginuser(request):
             return render(request, 'stock/loginuser.html', {'form': AuthenticationForm(), 'error':'Username and Password did not match'})
         else:
             login(request, user)
-            return redirect('currentstocks')
+            return redirect('portfolio')
 
 def logoutuser(request):
     if request.method == "POST":
@@ -62,7 +79,7 @@ def createstock(request):
             newstock = form.save(commit=False)
             newstock.user = request.user
             newstock.save()
-            return redirect('currentstocks')
+            return redirect('portfolio')
         except ValueError:
             return render(request, 'stock/createstock.html', {'form': StockForm(), 'error':'Bad data passed in'})
 
@@ -75,7 +92,7 @@ def viewstock(request, stock_pk):
         try:
             form = StockForm(request.POST, instance=stock)
             form.save()
-            return redirect('currentstocks')
+            return redirect('portfolio')
         except ValueError:
             return render(request, 'todo/viewstock.html', {'stock': stock, 'form': form, 'error': 'Bad Info'})
 
@@ -83,4 +100,21 @@ def deletestock(request, stock_pk):
     stock = get_object_or_404(Stock, pk=stock_pk, user=request.user)
     if request.method == 'POST':
         stock.delete()
-        return redirect('currentstocks')
+        return redirect('portfolio')
+
+def overview(request):
+    stocks = Stock.objects.filter(user=request.user)
+    unique_stocks = stock_evaluation.stock_ticker(stocks)
+
+    portfolio = stock_evaluation.portfolio_dataframe(stocks).reset_index().rename(columns={'index':'Ticker'})
+    print(portfolio)
+    json_portfolio = portfolio.to_json(orient='records')
+    data = []
+    data = json.loads(json_portfolio)
+
+    transactions = stock_evaluation.transactions_dataframe(stocks)
+    holdings = stock_evaluation.current_holdings(stocks)
+
+    return render(request, 'stock/overview.html', {'stocks':stocks, 'data':data})
+
+

@@ -29,8 +29,10 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('create/', views.createstock, name='createstock'),
     path('current/', views.currentstocks, name='currentstocks'),
+    path('portfolio/', views.portfolio, name='portfolio'),
     path('stocks/<int:stock_pk>', views.viewstock, name='viewstock'),
     path('stocks/<int:stock_pk>/delete', views.deletestock, name='deletestock'),
+    path('overview/', views.overview, name='overview'),
 
     # Plotly-dash
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
