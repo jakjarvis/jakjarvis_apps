@@ -1,5 +1,4 @@
 """jakjarvis URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
@@ -15,7 +14,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from stock import views, ticker
+from projects import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,16 +26,17 @@ urlpatterns = [
     path('logout/', views.logoutuser, name='logoutuser'),
     path('login/', views.loginuser, name='loginuser'),
 
-    # View stocks
+    # Projects
     path('home/', views.home, name='home'),
-    path('create/', views.createstock, name='createstock'),
-    path('current/', views.currentstocks, name='currentstocks'),
-    path('portfolio/', views.portfolio, name='portfolio'),
-    path('stocks/<int:stock_pk>', views.viewstock, name='viewstock'),
-    path('stocks/<int:stock_pk>/delete', views.deletestock, name='deletestock'),
-    path('overview/', views.overview, name='overview'),
+
+    # Stocks
+    path('stock/', include('stock.urls')),
+
+    # Client
+    path('car_client/', include('car_client.urls')),
 
     # Plotly-dash
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
-
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

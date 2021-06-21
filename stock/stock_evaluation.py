@@ -1,5 +1,6 @@
 import pandas as pd
 from yahoo_fin import stock_info as si
+from datetime import datetime, date
 
 def stock_ticker(stocks):
     # Returns a list of all the unique stocks that have ever been bought or sold
@@ -32,25 +33,28 @@ def current_holdings(stocks):
 def portfolio_dataframe(stocks):
     transactions_df = transactions_dataframe(stocks)
     index = stock_ticker(stocks)
-    columns = ['Total_held', 'Av_Buy_Price', 'Total_Spent', 'Total_Return', 'Current_Value']
+    columns = ['Total_held', 'Av_Buy_Price', 'Total_Spent', 'Total_Return', 'Current_Value', 'First_Purchase']
     portfolio_df = pd.DataFrame(index = index, columns = columns)
     for col in portfolio_df.columns:
         portfolio_df[col].values[:] = 0
     for stock in index:
         total = 0
         average = 0
+        date = datetime.today().date()
         for index, row in transactions_df[transactions_df.ticker == stock].iterrows():
             if row['type'] == 'buy':
                 average = ((total * average) + (row['volume'] * row['price'])) / (total + row['volume'])
                 total = total + row['volume']
                 portfolio_df.loc[stock, 'Total_Spent'] += row['volume'] * row['price']
+                if row['date'] <= date:
+                    date = row['date']
             elif row['type'] == 'sel':
                 total = total - row['volume']
                 portfolio_df.loc[stock, 'Total_Return'] += row['volume'] * row['price']
             else:
                 print('Buy/Sell not specified')
-            print(total, average)
         portfolio_df.loc[stock, 'Total_held'] = total
         portfolio_df.loc[stock, 'Av_Buy_Price'] = average
+        portfolio_df.loc[stock, 'First_Purchase'] = date
         portfolio_df.loc[stock, 'Current_Value'] = round((total * si.get_live_price(stock)), 0)
     return portfolio_df
