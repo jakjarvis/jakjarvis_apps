@@ -5,7 +5,6 @@ from datetime import date
 class Advent(models.Model):
     year = models.IntegerField(default=2015)
     day = models.IntegerField(default=1)
-    part = models.IntegerField(default=1)
     memo = models.TextField(blank=True)
 
     def __str__(self):

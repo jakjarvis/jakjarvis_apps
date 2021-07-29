@@ -3,18 +3,20 @@
 {%load plotly_dash%}
 
 {% block content %}
-<div style = "border-radius:5px 5px 0 0; background-color:#f9ca24">
+<div style = "border-radius:5px 5px 0 0; height:550px">
   <div style = "margin:10px 10px 0 10px">
     <h3>My Portfolio</h3>
     <a href="{% url 'createstock' %}" class="btn btn-primary">Add Transaction</a>
     <a href="{% url 'overview' %}" class="btn btn-primary">View Transactions</a>
   </div>
-  <div class="{%plotly_class name='ticker'%}">
-      {% plotly_app ratio=0.7 name="ticker" initial_arguments=stock_ticker %}
+  <div>
+    <div class="{%plotly_class name='ticker'%}">
+      {% plotly_app ratio=1 name="ticker" initial_arguments=stock_ticker %}
+    </div>
   </div>
 </div>
-<div class="container" style="border-radius:0 0 5px 5px; background-color:#f9ca24">
-  <table class="table table-light table-striped">
+<div style="border-radius:0 0 5px 5px">
+  <table class="table table-light table-striped" style="padding:0 10px 0 10px">
     <thead>
       <tr>
         <th>Stock</th>

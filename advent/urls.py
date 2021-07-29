@@ -18,6 +18,6 @@ from advent import views
 
 urlpatterns = [
 
-    path('home/', views.home, name='adventhome'),
-
+    path('', views.home, name='adventhome'),
+    path('solution/', views.solution, name='solution'),
 ]

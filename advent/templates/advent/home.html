@@ -3,15 +3,33 @@
 {% load plotly_dash %}
 
 {% block content %}
-<div class="text-start">
-    <h3>Available Solutions</h3>
-    <ul>
-        {% for puzzle in puzzles %}
-        <li>
-            {{ puzzle.year }}; Day {{ puzzle.day }}; Part {{ puzzle.part }}
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+<h2>Available Solutions</h2>
+<form action="{% url 'solution' %}">
+    <h4>Year</h4>
+    <select name="year">
+        <option>2015</option>
+    </select>
+    <h4>Day</h4>
+    <select name="day">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+    </select>
+    <h4>Input - Part 1</h4>
+    <input type="text" name="part1_input" id="part1_input" required>
+    <h4>Input - Part 2 (if relevant)</h4>
+    <input type="text" name="part2_input" id="part2_input" value="NA">
+    <br>
+    <br>
+    <input type="submit" value="Solve!">
+</form>
+
+<ul>
+    {% for puzzle in puzzles %}
+    <li>
+        {{ puzzle.year }}; Day {{ puzzle.day }}; Part {{ puzzle.part }}
+    </li>
+    {% endfor %}
+</ul>
 
 {% endblock %}
