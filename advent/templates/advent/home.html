@@ -1,0 +1,17 @@
+{% extends 'advent/base.html' %}
+
+{% load plotly_dash %}
+
+{% block content %}
+<div class="text-start">
+    <h3>Available Solutions</h3>
+    <ul>
+        {% for puzzle in puzzles %}
+        <li>
+            {{ puzzle.year }}; Day {{ puzzle.day }}; Part {{ puzzle.part }}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

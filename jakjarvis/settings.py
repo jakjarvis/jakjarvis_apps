@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'stock',
     'projects',
     'car_client',
+    'advent',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
-    'channels'
 ]
 
 MIDDLEWARE = [
@@ -82,7 +82,7 @@ ASGI_APPLICATION = "jakjarvis.asgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3")),
     }
 }
 
@@ -124,10 +124,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = str(os.path.join(BASE_DIR, "static"))
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = str(os.path.join(BASE_DIR, "media"))
 
 # For whitenose compression support (not sure if really needed!)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

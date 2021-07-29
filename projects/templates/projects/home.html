@@ -6,18 +6,22 @@
     <h2>My Applications</h2>
     <br>
     {% for project in projects %}
-    <div style="max-width:50%; text-align:center; display:inline-block">
+    <div style="max-width:28%; text-align:center; display:inline-block; margin:2%; vertical-align:top">
         {% if project.view != '' %}
         <a href="{% url project.view %}">
             <img src="{{ project.image.url }}"
-             alt="Portfolio app"
-             class="img-thumbnail">
+                 alt="Portfolio app"
+                 class="img-thumbnail"
+                 width="300"
+                 height="300";>
         </a>
         {% else %}
         <a href="{{ project.url }}">
             <img src="{{ project.image.url }}"
-             alt="Portfolio app"
-             class="img-thumbnail">
+                 alt="Portfolio app"
+                 class="img-thumbnail"
+                 width="28%"
+                 height="28%";>
         </a>
         {% endif %}
         <h4 style="margin-top:10px">{{ project.title }}</h4>

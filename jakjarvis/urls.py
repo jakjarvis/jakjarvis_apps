@@ -35,6 +35,9 @@ urlpatterns = [
     # Client
     path('car_client/', include('car_client.urls')),
 
+    # Advent
+    path('advent/', include('advent.urls')),
+
     # Plotly-dash
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
 ]
