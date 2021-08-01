@@ -706,6 +706,551 @@ def solution(year, day, part1_input, part2_input):
 
         return solution1, solution2
 
+#Day 9
+    def day9_2015(part1_input):
+        import itertools
+
+        split_input = part1_input.split()
+        input_list = []
+        counter = 0
+        while len(split_input) > 0:
+            try:
+                a = int(split_input[counter])
+                input_list += [' '.join(split_input[:(counter + 1)])]
+                split_input = split_input[(counter + 1):]
+                counter = 0
+            except:
+                counter += 1
+
+        #Part 1
+        places = []
+        for route in input_list:
+            step = str.split(route)
+            if step[0] in places:
+                pass
+            else:
+                places += [step[0]]
+            if step[2] in places:
+                pass
+            else:
+                places += [step[2]]
+
+        register = {}
+
+        for place in places:
+            otherPlaces = places.copy()
+            otherPlaces.remove(place)
+            register[place] = {}
+            for otherPlace in otherPlaces:
+                for route in input_list:
+                    step = str.split(route)
+                    if place in step and otherPlace in step:
+                        register[place][otherPlace] = int(step[4])
+
+        answer = 1000000
+        for combo in list(itertools.permutations(places)):
+            length = len(combo)
+            step = 0
+            total = 0
+            for leg in combo:
+                if step == length - 1:
+                    pass
+                else:
+                    total += register[combo[step]][combo[step + 1]]
+                step += 1
+
+            if total <= answer:
+                answer = total
+        solution1 = answer
+
+        #Part 2
+        answer = 0
+        for combo in list(itertools.permutations(places)):
+            length = len(combo)
+            step = 0
+            total = 0
+            for leg in combo:
+                if step == length - 1:
+                    pass
+                else:
+                    total += register[combo[step]][combo[step + 1]]
+                step += 1
+
+            if total >= answer:
+                answer = total
+        solution2 = answer
+
+        return solution1, solution2
+
+#Day 10
+    def day10_2015(part1_input):
+
+        #Part 1
+        LaS = part1_input
+        for n in range(40):
+            new = ""
+            counter = 1
+            run = 1
+            for x in LaS:
+                if counter == len(LaS):
+                    new = new + str(run) + str(x)
+                    LaS = new
+
+                elif x == LaS[counter]:
+                    run += 1
+
+                else:
+                    new = new + str(run) + str(x)
+                    run = 1
+
+                counter += 1
+            solution1 = str(len(LaS))
+
+        #Part 2
+
+        solution2 = "Due to server constraints, Part 2 must be run on a local machine. Code can be accessed through the 'solution' link:"
+
+        return solution1, solution2
+
+#Day 11
+    def day11_2015(part1_input):
+
+        def solution(inpt):
+            numInpt = []
+            oupt = ''
+
+            for char in inpt:
+                number = ord(char) - 96
+                numInpt.append(number)
+
+            run = False
+            trick = False
+            pair1 = False
+            pair2 = False
+            counter3 = 0
+
+            for x in range(1000000):
+
+                run = False
+                trick = True
+                pair1 = False
+                pair2 = False
+                skip = False
+
+                counter1 = 0
+
+                for x in numInpt[:6]:
+                    if numInpt[counter1 + 1] == x + 1:
+                        if numInpt[counter1 + 2] == x + 2:
+                            run = True
+                    else:
+                        counter1 += 1
+
+                for x in numInpt:
+                    if x == ord('i') - 96 or x == ord('o') - 96 or x == ord('l') - 96:
+                        trick = True
+                    else:
+                        trick = False
+
+                counter2 = 0
+
+                for x in numInpt[:7]:
+                    if x == numInpt[counter2 + 1]:
+                        if skip == True:
+                            skip = False
+                        elif pair1 == False:
+                            pair1 = True
+                            skip = True
+                        else:
+                            pair2 = True
+                    else:
+                        skip = False
+
+                    counter2 += 1
+
+                if run == True and trick == False and pair2 == True:
+                    oupt = ''
+                    for x in numInpt:
+                        oupt += chr(x + 96)
+
+                    return oupt
+
+                    break
+
+                else:
+                    for x in range(7, 0, -1):
+                        if numInpt[x] != 26:
+                            numInpt[x] += 1
+                            break
+                        else:
+                            numInpt[x] = 1
+
+        #Part 1
+        solution1 = solution(part1_input)
+
+        #Part 2
+        sol2_interate = []
+        for char in solution1:
+            number = ord(char) - 96
+            sol2_interate.append(number)
+        for x in range(7, 0, -1):
+            if sol2_interate[x] != 26:
+                sol2_interate[x] += 1
+                break
+            else:
+                sol2_interate[x] = 1
+        sol2_input = ''
+        for x in sol2_interate:
+            sol2_input += chr(x + 96)
+
+        solution2 = solution(sol2_input)
+
+        return solution1, solution2
+
+#Day 12
+    def day12_2015(part1_input):
+        import ast
+
+        txt = part1_input.decode("utf-8") #the file reads in as a bytes (b') type - need to convert it to string type
+
+        #Part 1
+        lst = list(txt)
+        counter = 0
+        total = 0
+        string = ''
+
+        for x in lst:
+            if ord(x) >= 48 and ord(x) <= 57:
+                string = string + x
+                if ord(lst[counter + 1]) >= 48 and ord(lst[counter + 1]) <= 57:
+                    pass
+                else:
+                    num = int(string)
+                    total = total + num
+                    string = ''
+
+            elif x == '-' and ord(lst[counter + 1]) >= 48 and ord(lst[counter + 1]) <= 57:
+                string = string + x
+            counter += 1
+
+        solution1 = total
+
+        #Part 2
+        def loop(x, count, typ):
+            valueX = 0
+            level = count
+            for a in x:
+                if type(a) is dict:
+                    output = loop(a.values(), level + 1, 'd')
+                    valueX += output
+
+                elif type(a) is list or type(a) is tuple:
+                    output = loop(a, level + 1, 'l')
+                    valueX += output
+
+                else:
+                    if a == 'red' and typ == 'd':
+                        valueX = 0
+                        break
+                    elif a == 'red' and typ == 'l':
+                        pass
+                    elif type(a) is int:
+                        valueX += a
+
+            return valueX
+
+        solution2 = loop(ast.literal_eval(txt), 0, 'l') #ast.literal_eval reads the string representation of a list as an actual list
+
+        return solution1, solution2
+
+#Day 13
+    def day13_2015(part1_input):
+        import itertools
+
+        split_input = part1_input.split()
+        input_list = []
+        counter = 0
+        while counter < len(split_input):
+            if split_input[counter][-1] == '.':
+                input_list += [' '.join(split_input[:(counter + 1)])]
+                split_input = split_input[(counter + 1):]
+                counter = 0
+            else:
+                counter += 1
+
+        input_list_of_lists = []
+        for line in input_list:
+            input_list_of_lists += [line.split(' ')]
+
+        guests = []
+        for line in input_list_of_lists:
+            # print(line)
+            name = line[0]
+            if name not in guests:
+                guests += [name]
+
+        register = {}
+        for guest in guests:
+            otherGuests = guests.copy()
+            otherGuests.remove(guest)
+            register[guest] = {}
+            for otherGuest in otherGuests:
+                for instruction in input_list_of_lists:
+                    if instruction[0] == guest and instruction[-1] == (otherGuest + '.'):
+                        if instruction[2] == 'lose':
+                            register[guest][otherGuest] = int('-' + instruction[3])
+                        elif instruction[2] == 'gain':
+                            register[guest][otherGuest] = int(instruction[3])
+                        else:
+                            print('Recognition error in ' + str(step))
+
+        options = []
+        fullOptions = []
+        options = list(itertools.permutations(guests, len(guests)))
+        for option in options:
+            fullOptions += [option + (option[0],)]
+        best_arrangement = []
+        topScore = 0
+        for option in fullOptions:
+            counter = 0
+            score = 0
+            while counter <= len(guests) - 1:
+                score += register[option[counter]][option[counter + 1]]
+                score += register[option[counter + 1]][option[counter]]
+                counter += 1
+            if score >= topScore:
+                topScore = score
+                best_arrangement = option
+
+        solution1 = topScore
+
+        #Part 2
+        for dic in register:
+            register[dic]['Jono'] = 0
+        register['Jono'] = {}
+        for guest in guests:
+            register['Jono'][guest] = 0
+        guests.append('Jono')
+
+        options = []
+        fullOptions = []
+        options = list(itertools.permutations(guests, len(guests)))
+        for option in options:
+            fullOptions += [option + (option[0],)]
+        best_arrangement = []
+        topScore = 0
+        for option in fullOptions:
+            counter = 0
+            score = 0
+            while counter <= len(guests) - 1:
+                score += register[option[counter]][option[counter + 1]]
+                score += register[option[counter + 1]][option[counter]]
+                counter += 1
+            if score >= topScore:
+                topScore = score
+                best_arrangement = option
+
+        solution2 = topScore
+
+        return solution1, solution2
+
+#Day 14
+    def day14_2015(part1_input):
+        import pandas as pd
+
+        split_input = part1_input.split()
+        input_list = []
+        counter = 0
+        while counter < len(split_input):
+            if split_input[counter][-1] == '.':
+                input_list += [' '.join(split_input[:(counter + 1)])]
+                split_input = split_input[(counter + 1):]
+                counter = 0
+            else:
+                counter += 1
+
+        input_list_of_lists = []
+        for line in input_list:
+            input_list_of_lists += [line.split(' ')]
+
+        data = pd.DataFrame()  # {'Name':[], 'Speed':[], 'Endurance':[], 'Rest':[]})
+
+        for line in input_list_of_lists:
+            data = data.append(
+                {'Name': line[0], 'Speed': int(line[3]), 'Endurance': int(line[6]), 'Rest': int(line[-2])},
+                ignore_index=True)
+
+        timeStep = 2503
+
+        for id, row in data.iterrows():
+
+            cycles = timeStep // (data['Endurance'][id] + data['Rest'][id])
+            finalDash = timeStep % (data['Endurance'][id] + data['Rest'][id])
+            if finalDash <= data['Endurance'][id]:
+                distance = (cycles * data['Endurance'][id] + finalDash) * data['Speed'][id]
+            else:
+                distance = (cycles + 1) * data['Endurance'][id] * data['Speed'][id]
+
+            data.loc[id, "Distance"] = distance
+
+        solution1 = str(int(max(data["Distance"])))
+
+        #Part 2
+        data2 = pd.DataFrame()  # {'Name':[], 'Speed':[], 'Endurance':[], 'Rest':[]})
+
+        for line in input_list_of_lists:
+            data2 = data.append(
+                {'Name': line[0], 'Speed': int(line[3]), 'Endurance': int(line[6]), 'Rest': int(line[-2])},
+                ignore_index=True)
+
+        data['Points'] = pd.Series([0 for x in range(len(data.index))], index=data.index)
+
+        for timeStep in range(1, 2504):
+
+            for id, row in data.iterrows():
+                cycles = timeStep // (data['Endurance'][id] + data['Rest'][id])
+                finalDash = timeStep % (data['Endurance'][id] + data['Rest'][id])
+                if finalDash <= data['Endurance'][id]:
+                    distance = (cycles * data['Endurance'][id] + finalDash) * data['Speed'][id]
+                else:
+                    distance = (cycles + 1) * data['Endurance'][id] * data['Speed'][id]
+
+                data.loc[id, "Distance"] = distance
+
+            for id, row in data.iterrows():
+                if data['Distance'][id] == max(data["Distance"]):
+                    data.loc[id, "Points"] += 1
+
+            if timeStep % 500 == 0:
+                print('Completed ' + str(timeStep) + ' seconds.')
+
+        solution2 = max(data["Points"])
+
+        return solution1, solution2
+
+#Day 15
+    def day15_2015(part1_input):
+        import pandas as pd
+        import re
+
+        split_input = part1_input.split()
+        input_list = []
+        counter = 1
+        while counter < len(split_input):
+            if split_input[counter][-1] == ':':
+                input_list += [' '.join(split_input[:(counter)])]
+                split_input = split_input[(counter):]
+                counter = 0
+            else:
+                counter += 1
+
+        input_list_of_lists = []
+        for line in input_list:
+            input_list_of_lists += [line.split(' ')]
+
+        data = pd.DataFrame()
+        for line in inpt:
+            data = data.append({'Name': line[0], 'Capacity': int(re.sub("[^\d\-]", "", line[2])),
+                                'Durability': int(re.sub("[^\d\-]", "", line[4])),
+                                'Flavor': int(re.sub("[^\d\-]", "", line[6])),
+                                'Texture': int(re.sub("[^\d\-]", "", line[8])),
+                                'Calories': int(re.sub("[^\d\-]", "", line[10]))}, ignore_index=True)
+
+        ingredients = data['Name'].tolist()
+        print(ingredients)
+
+        recipe = {}
+        for row in data['Name']:
+            recipe[row] = 0
+        print(recipe)
+
+        data.set_index('Name', inplace=True, drop=True)
+        print(data)
+
+        def ingred(index, recipe, topScore):
+            spaceLeft = totalTeaspoons
+            for x in range(0, index):
+                spaceLeft -= recipe.get(ingredients[x])
+            if index <= len(recipe) - 2:
+                for n in range(0, spaceLeft + 1):
+                    recipe[ingredients[index]] = n
+                    index += 1
+                    index, recipe, topScore = ingred(index, recipe, topScore)
+            else:
+                recipe[ingredients[index]] = spaceLeft
+                capacity = 0
+                for x in range(len(ingredients)):
+                    capacity += data.at[ingredients[x], 'Capacity'] * recipe[ingredients[x]]
+                durability = 0
+                for x in range(len(ingredients)):
+                    durability += data.at[ingredients[x], 'Durability'] * recipe[ingredients[x]]
+                flavor = 0
+                for x in range(len(ingredients)):
+                    flavor += data.at[ingredients[x], 'Flavor'] * recipe[ingredients[x]]
+                texture = 0
+                for x in range(len(ingredients)):
+                    texture += data.at[ingredients[x], 'Texture'] * recipe[ingredients[x]]
+
+                if capacity <= -1 or durability <= -1 or flavor <= -1 or texture <= -1:
+                    score = 0
+                else:
+                    score = capacity * durability * flavor * texture
+
+                if score >= topScore + 1:
+                    topScore = score
+
+            index -= 1
+            return index, recipe, topScore
+        totalTeaspoons = 100
+        solution1 = ingred(0, recipe, 0)[2]
+
+        #Part 2
+        def calor(index, recipe, topScore):
+            spaceLeft = totalTeaspoons
+            for x in range(0, index):
+                spaceLeft -= recipe.get(ingredients[x])
+            if index <= len(recipe) - 2:
+                for n in range(0, spaceLeft + 1):
+                    recipe[ingredients[index]] = n
+                    index += 1
+                    index, recipe, topScore = calor(index, recipe, topScore)
+
+            else:
+                recipe[ingredients[index]] = spaceLeft
+
+                capacity = 0
+                for x in range(len(ingredients)):
+                    capacity += data.at[ingredients[x], 'Capacity'] * recipe[ingredients[x]]
+                durability = 0
+                for x in range(len(ingredients)):
+                    durability += data.at[ingredients[x], 'Durability'] * recipe[ingredients[x]]
+                flavor = 0
+                for x in range(len(ingredients)):
+                    flavor += data.at[ingredients[x], 'Flavor'] * recipe[ingredients[x]]
+                texture = 0
+                for x in range(len(ingredients)):
+                    texture += data.at[ingredients[x], 'Texture'] * recipe[ingredients[x]]
+                calories = 0
+                for x in range(len(ingredients)):
+                    calories += data.at[ingredients[x], 'Calories'] * recipe[ingredients[x]]
+
+                if capacity <= -1 or durability <= -1 or flavor <= -1 or texture <= -1:
+                    score = 0
+                elif calories != 500:
+                    score = 0
+                else:
+                    score = capacity * durability * flavor * texture
+                if score >= topScore + 1:
+                    topScore = score
+
+            index -= 1
+            return index, recipe, topScore
+
+            totalTeaspoons = 100
+            solution2 = calor(0, recipe, 0)[2]
+
+        return solution1, solution2
+
 # Match solution to function
     if year == "2015":
         if day == "1": solution1, solution2 = day1_2015(part1_input)
@@ -716,5 +1261,12 @@ def solution(year, day, part1_input, part2_input):
         if day == "6": solution1, solution2 = day6_2015(part1_input)
         if day == "7": solution1, solution2 = day7_2015(part1_input)
         if day == "8": solution1, solution2 = day8_2015(part1_input)
+        if day == "9": solution1, solution2 = day9_2015(part1_input)
+        if day == "10": solution1, solution2 = day10_2015(part1_input)
+        if day == "11": solution1, solution2 = day11_2015(part1_input)
+        if day == "12": solution1, solution2 = day12_2015(part1_input)
+        if day == "13": solution1, solution2 = day13_2015(part1_input)
+        if day == "14": solution1, solution2 = day14_2015(part1_input)
+        if day == "15": solution1, solution2 = day15_2015(part1_input)
 
     return solution1, solution2

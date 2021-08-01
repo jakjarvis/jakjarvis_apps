@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<select onchange="somefunction($(this).val())">
+ <option value="1">Option 1</option>
+ <option value="2">Option 2</option>
+ </select>
+
+<script>
+  function somefunction(value){
+     if(value == 1){
+      $("body").css("background-color","red");
+     }
+     if(value == 2){
+       $("body").css("background-color","yellow");
+     }
+  }
+</script>
+
+</body>
+</html>

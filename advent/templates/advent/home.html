@@ -1,32 +1,44 @@
 {% extends 'advent/base.html' %}
 
-{% load plotly_dash %}
-
 {% block content %}
+
 <h2>Available Solutions</h2>
-<form action="{% url 'solution' %}">
+<form action="{% url 'solution' %}" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
     <h4>Year</h4>
     <select name="year">
         <option>2015</option>
     </select>
     <h4>Day</h4>
-    <select name="day">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
+    <select name="day" id="day" onchange="format_function(this)">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
     </select>
-    <h4>Input - Part 1</h4>
-    <input type="text" name="part1_input" id="part1_input" required>
-    <h4>Input - Part 2 (if relevant)</h4>
-    <input type="text" name="part2_input" id="part2_input" value="NA">
+    <h4 id="part1_header">Input</h4>
+    <input type="text" name="part1_text" id="part1_text">
+    <p id="text_disclaimer">Please copy and paste the input as a single string into this text box.</p>
+    <input type="file" name="part1_file" id="part1_file" class="d-none">
+    <p id="file_disclaimer" class="d-none">Due to the size of this input, please copy-paste it into a .txt file and upload it here.</p>
+    <p id="time_warning" class="d-none" style="color:red">WARNING: Due to the computing power required,
+        running this online may take a long time or even not resolve.
+        If so, refer to the solution code and run on a local machine.</p>
+    <h4 id="part2_header" class="d-none">Input - Part 2</h4>
+    <input type="text" name="part2_text" id="part2_text" value="NA" class="d-none">
     <br>
-    <br>
-    <input type="submit" value="Solve!">
+    <input type="submit" value="Solve!" class="btn btn-success">
 </form>
 
 <ul>
@@ -36,5 +48,36 @@
     </li>
     {% endfor %}
 </ul>
+
+<script>
+    function format_function(element){
+        const a = element.options[element.selectedIndex].value;
+        var part1_text = document.getElementById("part1_text");
+        var part1_file = document.getElementById("part1_file");
+        var text_disclaimer = document.getElementById("text_disclaimer");
+        var file_disclaimer = document.getElementById("file_disclaimer");
+        var time_warning = document.getElementById("time_warning")
+
+        if(a == '12') {
+            part1_text.classList.add("d-none");
+            text_disclaimer.classList.add("d-none");
+            part1_file.classList.remove("d-none");
+            file_disclaimer.classList.remove("d-none");
+        }
+        else {
+            part1_text.classList.remove("d-none");
+            text_disclaimer.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            file_disclaimer.classList.add("d-none");
+        }
+
+        if(a =='15') {
+            time_warning.classList.remove("d-none");
+        }
+        else {
+            time_warning.classList.add("d-none");
+        }
+    }
+</script>
 
 {% endblock %}

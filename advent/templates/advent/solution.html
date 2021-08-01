@@ -1,11 +1,18 @@
+{% extends 'advent/base.html' %}
+
+{% block content %}
+
 <h1>The Solution for {{ solution_ref }} is:</h1>
-<h2>From file:</h2>
-<h4>Part 1: {{ part1_solution }}</h4>
-<h4>Part 2: {{ part2_solution }}</h4>
-<h4><a href={{ solution_git }}>Solution*</a></h4>
+<br>
+<h3 style="text-indent:20px">Part 1: {{ part1_solution }}</h3>
+<h3 style="text-indent:20px">Part 2: {{ part2_solution }}</h3>
+<br>
+<h5><a href={{ solution_git }}>Solution*</a></h5>
 <br>
 <p>*Note: This links to the original workings from when I first attempted this puzzle
     (possibly when I was only just starting to learn to code) so may be quite messy!
     The code has been slightly refactored to work in this application, for example to
     allow it to always take a string as an input. However, the general process is not
     changed from my original workings.</p>
+
+{% endblock %}
