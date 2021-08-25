@@ -1,3 +1,5 @@
+import multiprocessing
+
 def solution(year, day, part1_input, part2_input):
 
 #Day 1
@@ -1002,7 +1004,7 @@ def solution(year, day, part1_input, part2_input):
                         elif instruction[2] == 'gain':
                             register[guest][otherGuest] = int(instruction[3])
                         else:
-                            print('Recognition error in ' + str(step))
+                            print('Recognition error in ' + str(instruction))
 
         options = []
         fullOptions = []
@@ -1149,7 +1151,7 @@ def solution(year, day, part1_input, part2_input):
             input_list_of_lists += [line.split(' ')]
 
         data = pd.DataFrame()
-        for line in inpt:
+        for line in input_list_of_lists:
             data = data.append({'Name': line[0], 'Capacity': int(re.sub("[^\d\-]", "", line[2])),
                                 'Durability': int(re.sub("[^\d\-]", "", line[4])),
                                 'Flavor': int(re.sub("[^\d\-]", "", line[6])),
@@ -1167,7 +1169,7 @@ def solution(year, day, part1_input, part2_input):
         data.set_index('Name', inplace=True, drop=True)
         print(data)
 
-        def ingred(index, recipe, topScore):
+        def ingred(totalTeaspoons, index, recipe, topScore):
             spaceLeft = totalTeaspoons
             for x in range(0, index):
                 spaceLeft -= recipe.get(ingredients[x])
@@ -1202,10 +1204,10 @@ def solution(year, day, part1_input, part2_input):
             index -= 1
             return index, recipe, topScore
         totalTeaspoons = 100
-        solution1 = ingred(0, recipe, 0)[2]
+        solution1 = ingred(totalTeaspoons, 0, recipe, 0)[2]
 
         #Part 2
-        def calor(index, recipe, topScore):
+        def calor(totalTeaspoons, index, recipe, topScore):
             spaceLeft = totalTeaspoons
             for x in range(0, index):
                 spaceLeft -= recipe.get(ingredients[x])
@@ -1247,9 +1249,437 @@ def solution(year, day, part1_input, part2_input):
             return index, recipe, topScore
 
             totalTeaspoons = 100
-            solution2 = calor(0, recipe, 0)[2]
+            solution2 = calor(totalTeaspoons, 0, recipe, 0)[2]
 
         return solution1, solution2
+
+#Day 16
+    def day16_2015(part1_input):
+        import pandas as pd
+
+        split_input = part1_input.split()
+        input_list = []
+        counter = 1
+        while counter < len(split_input):
+            if split_input[counter] == 'Sue':
+                input_list += [' '.join(split_input[:(counter)])]
+                split_input = split_input[(counter):]
+                counter = 1
+            else:
+                counter += 1
+
+        input_list_of_dicts = []
+        for row in input_list:
+            input_list_of_dicts += [{row.split(' ')[i]: row.split(' ')[i + 1] for i in range(0, len(row.split(' ')), 2)}]
+
+        criteria = ['Sue', 'children:', 'cats:', 'samoyeds:', 'pomeranians:', 'akitas:', 'vizslas:', 'goldfish:',
+                    'trees:', 'cars:', 'perfumes:']
+        data = pd.DataFrame(columns=criteria)
+
+        new_reg = dict.fromkeys(criteria)
+
+        for entry in input_list_of_dicts:
+            for item in entry:
+                new_reg[item] = (entry.get(item)).strip(',')
+            data = data.append(new_reg, ignore_index=True)
+            new_reg = dict.fromkeys(criteria)
+
+        data.set_index('Sue', inplace=True, drop=True)
+
+        answer = {'Sue': 0, 'children:': 3, 'cats:': 7, 'samoyeds:': 2, 'pomeranians:': 3, 'akitas:': 0, 'vizslas:': 0,
+                  'goldfish:': 5, 'trees:': 3, 'cars:': 2, 'perfumes:': 1}
+
+        for catagory in criteria[1:len(criteria)]:
+            for entry in range(1, len(data) + 1):
+                if data[catagory][str(entry) + ':'] != None and data[catagory][str(entry) + ':'] != str(
+                        answer[catagory]):
+                    data.at[str(entry) + ':', catagory] = 'Wrong'
+
+        for n in range(0, len(data)):
+            if data.iloc[n].str.contains("Wrong").any() == False:
+                solution1 = data.index[n:n+1].to_list()[0][:-1]
+
+        #Part 2
+        split_input = part1_input.split()
+        input_list = []
+        counter = 1
+        while counter < len(split_input):
+            if split_input[counter] == 'Sue':
+                input_list += [' '.join(split_input[:(counter)])]
+                split_input = split_input[(counter):]
+                counter = 1
+            else:
+                counter += 1
+
+        input_list_of_dicts = []
+        for row in input_list:
+            input_list_of_dicts += [{row.split(' ')[i]: row.split(' ')[i + 1] for i in range(0, len(row.split(' ')), 2)}]
+
+        criteria = ['Sue', 'children:', 'cats:', 'samoyeds:', 'pomeranians:', 'akitas:', 'vizslas:', 'goldfish:',
+                    'trees:', 'cars:', 'perfumes:']
+        data = pd.DataFrame(columns=criteria)
+
+        new_reg = dict.fromkeys(criteria)
+
+        for entry in input_list_of_dicts:
+            for item in entry:
+                new_reg[item] = (entry.get(item)).strip(',')
+            data = data.append(new_reg, ignore_index=True)
+            new_reg = dict.fromkeys(criteria)
+
+        data.set_index('Sue', inplace=True, drop=True)
+
+        answer = {'Sue': 0, 'children:': 3, 'cats:': 7, 'samoyeds:': 2, 'pomeranians:': 3, 'akitas:': 0, 'vizslas:': 0,
+                  'goldfish:': 5, 'trees:': 3, 'cars:': 2, 'perfumes:': 1}
+
+        for catagory in criteria[1:len(criteria)]:
+            if catagory == 'cats:' or catagory == 'trees:':
+                for entry in range(1, len(data) + 1):
+                    if data[catagory][str(entry) + ':'] != None and data[catagory][str(entry) + ':'] <= str(
+                            answer[catagory]):
+                        data.at[str(entry) + ':', catagory] = 'Wrong'
+            elif catagory == 'pomeranians:' or catagory == 'goldfish:':
+                for entry in range(1, len(data) + 1):
+                    if data[catagory][str(entry) + ':'] != None and data[catagory][str(entry) + ':'] >= str(
+                            answer[catagory]):
+                        data.at[str(entry) + ':', catagory] = 'Wrong'
+            else:
+                for entry in range(1, len(data) + 1):
+                    if data[catagory][str(entry) + ':'] != None and data[catagory][str(entry) + ':'] != str(
+                            answer[catagory]):
+                        data.at[str(entry) + ':', catagory] = 'Wrong'
+
+        for n in range(0, len(data)):
+            if data.iloc[n].str.contains("Wrong").any() == False:
+                solution2 = data.index[n:n+1].to_list()[0][:-1]
+
+        return solution1, solution2
+
+#Day 17
+    def day17_2015(part1_input):
+        input_list = list(map(int, part1_input.split(' ')))
+        containers = {}
+        for n in range(len(input_list)):
+            containers[chr(97 + n)] = sorted(input_list, reverse=True)[n]
+
+        def jugFiller(containerDict, remainingDict, comboList, winningCombos):
+            for n in range(len(remainingDict)):
+                comboList.append(list(remainingDict.keys())[n])
+                localTotal = 0
+                for jug in comboList:
+                    localTotal += containerDict.get(jug, None)
+                if localTotal == 150:
+                    winningCombos.append(comboList.copy())
+                if localTotal >= 150:
+                    comboList.pop()
+                else:
+                    remainingDict = containerDict.copy()
+                    for x in range(97, ord(comboList[-1]) + 1):
+                        del remainingDict[chr(x)]
+                    winningCombos = jugFiller(containerDict, remainingDict, comboList, winningCombos)
+                    comboList.pop()
+                    remainingDict = containerDict.copy()
+                    if len(comboList) != 0:
+                        for x in range(97, ord(comboList[-1]) + 1):
+                            del remainingDict[chr(x)]
+            return winningCombos
+
+        remaining = containers.copy()
+        combo = []
+        winners = []
+        totalWinners = jugFiller(containers, remaining, combo, winners)
+
+        solution1 = len(totalWinners)
+
+        #Part 2
+        lengths = {}
+        minLength = len(containers)
+        for combo in totalWinners:
+            if len(combo) <= minLength:
+                minLength = len(combo)
+        totalMin = 0
+        for combo in totalWinners:
+            if len(combo) <= minLength:
+                totalMin += 1
+
+        solution2 = totalMin
+
+        return solution1, solution2
+
+#Day 18
+    def day18_2015(part1_input):
+        #Part 1
+        grid_list = part1_input.split(' ')
+        input_dict = {}
+        for i in range(0, 100):
+            input_dict[i] = {}
+
+        for light_row in range(0,100):
+            for light in range(0,100):
+                if grid_list[light_row][light] == '#':
+                    input_dict[light_row][light] = 1
+                elif grid_list[light_row][light] == '.':
+                    input_dict[light_row][light] = 0
+                else:
+                    print('Unknown value in input!')
+
+        def step(inpt, outpt):
+            for row in range(0, 100):
+                for column in range(0, 100):
+                    localTotal = 0
+                    for neighbourX in range(row - 1, row + 2):
+                        for neighbourY in range(column - 1, column + 2):
+                            if neighbourX != row or neighbourY != column:
+                                try:
+                                    localTotal += inpt[neighbourX][neighbourY]
+                                except:
+                                    pass
+                    if inpt[row][column] == 1:
+                        if localTotal == 2 or localTotal == 3:
+                            outpt[row][column] = 1
+                        else:
+                            outpt[row][column] = 0
+                    elif inpt[row][column] == 0:
+                        if localTotal == 3:
+                            outpt[row][column] = 1
+                        else:
+                            outpt[row][column] = 0
+            return outpt
+
+        outpt = {}
+        for i in range(0, 100):
+            outpt[i] = {}
+
+        for turn in range(0, 100):
+            outpt = step(input_dict, outpt)
+            input_dict = outpt
+            input_dict = outpt.copy()
+            if turn == 99:
+                total = 0
+                for row in range(0, 100):
+                    total += sum(outpt[row].values())
+                solution1 = total
+            outpt = {}
+            for i in range(0, 100):
+                outpt[i] = {}
+
+        #Part 2
+        grid_list = part1_input.split(' ')
+        input_dict = {}
+        for i in range(0, 100):
+            input_dict[i] = {}
+
+        for light_row in range(0,100):
+            for light in range(0,100):
+                if grid_list[light_row][light] == '#':
+                    input_dict[light_row][light] = 1
+                elif grid_list[light_row][light] == '.':
+                    input_dict[light_row][light] = 0
+                else:
+                    print('Unknown value in input!')
+
+        def step2(inpt, outpt):
+            for row in range(0, 100):
+                for column in range(0, 100):
+                    localTotal = 0
+                    for neighbour in range(row - 1, row + 2):
+                        for cell in range(column - 1, column + 2):
+
+                            if neighbour != row or cell != column:
+                                try:
+                                    localTotal += inpt[neighbour][cell]
+                                except:
+                                    pass
+                    if (row == 0 or row == 99) and (column == 0 or column == 99):
+                        outpt[row][column] = 1
+                    elif inpt[row][column] == 1:
+                        if localTotal == 2 or localTotal == 3:
+                            outpt[row][column] = 1
+                        else:
+                            outpt[row][column] = 0
+                    elif inpt[row][column] == 0:
+                        if localTotal == 3:
+                            outpt[row][column] = 1
+                        else:
+                            outpt[row][column] = 0
+
+            return outpt
+
+        outpt = {}
+        for i in range(0, 100):
+            outpt[i] = {}
+        for turn in range(0, 100):
+            outpt = step2(input_dict, outpt)
+            input_dict = outpt
+            input_dict = outpt.copy()
+            if turn == 99:
+                total = 0
+                for row in range(0, 100):
+                    total += sum(outpt[row].values())
+                solution2 = total
+            outpt = {}
+            for i in range(0, 100):
+                outpt[i] = {}
+
+        return solution1, solution2
+
+#Day 19
+    def day19_2015(part1_input, part2_input):
+
+        medicine = part2_input
+        medicineComponents = []
+        for component in range(len(medicine)):
+            if component != len(medicine) - 1:
+                if medicine[component].isupper() == True and medicine[component + 1].isupper() == False:
+                    medicineComponents += [medicine[component:component + 2]]
+                elif medicine[component].isupper() == True and medicine[component + 1].isupper() == True:
+                    medicineComponents += medicine[component]
+                elif medicine[component] == 'e':
+                    medicineComponents += medicine[component]
+            else:
+                if medicine[component].isupper() == True:
+                    medicineComponents += medicine[component]
+                elif medicine[component] == 'e':
+                    medicineComponents += medicine[component]
+
+        #Part 1
+        split_input = part1_input.split()
+        input_list = []
+        counter = 0
+        while counter < len(split_input):
+            if split_input[counter] == '=>':
+                input_list += [' '.join(split_input[:(counter + 2)])]
+                split_input = split_input[(counter + 2):]
+                counter = 0
+            else:
+                counter += 1
+
+        molecules = []
+        for replacement in input_list:
+            if replacement[1] == ' ':
+                molecules += replacement[0]
+            else:
+                molecules += [replacement[0:2]]
+        molecules = sorted(set(molecules))
+
+        instructions = {}
+        for molecule in molecules:
+            instructions[molecule] = []
+
+        for replacement in input_list:
+            instructions[replacement.split()[0]] += [replacement.split()[2]]
+
+        previousCombos = []
+        uniqueCombos = 0
+        for component in range(len(medicineComponents)):
+            if medicineComponents[component] in molecules:
+                newCombos = []
+                newCombo = medicineComponents.copy()
+                for replacement in instructions[medicineComponents[component]]:
+                    newCombo[component] = replacement
+                    comboString = ''.join(str(i) for i in newCombo)
+                    if comboString not in previousCombos:
+                        uniqueCombos += 1
+                    newCombos += [comboString]
+                previousCombos = newCombos
+        solution1 = uniqueCombos
+
+        #Part 2
+        resultants = {}
+        for replacement in input_list:
+            resultants[replacement.split(' ')[2]] = replacement.split(' ')[0]
+
+        def check(medicine, swaps):
+            skip = 0
+            for step in range(len(medicine)):
+                if skip >= 1:
+                    skip -= 1
+                # Checks if it can be created from another molecule (is it a resultant) and if so switch it
+                for resultant in resultants:
+                    if len(medicine) - step >= len(resultant):
+                        if medicine[step:step + len(resultant)] == resultant:
+                            medicine = medicine[0:step] + resultants[resultant] + medicine[step + len(resultant):]
+                            # If the length of the new molecule is shorter than the original, skip the difference in steps
+                            skip += len(resultants[resultant]) - len(medicine[step:step + len(resultant)])
+                            swaps += 1
+            return medicine, swaps
+
+        medicine = part2_input
+        swaps = 0
+        allE = False
+
+        while allE == False:  # for n in range(1):
+            medicine, swaps = check(medicine, swaps)
+            nonE = 0
+            for letter in medicine:
+                if letter != 'e':
+                    nonE += 1
+            if nonE == 0:
+                allE = True
+
+        solution2 = swaps
+
+        return solution1, solution2
+
+#Day 20
+    def day20_2015(part1_input):
+    #Part 1
+        from math import sqrt
+        answer = 36000000
+        house = 1
+        presents = 0
+        elves = []
+
+        while presents <= answer:
+            for elf in range(1, int(sqrt(house)) + 1):
+                if house % elf == 0:
+                    elves += elf, int(house / elf)
+            elves = list(set(elves))
+            presents = sum(elves) * 10
+            if presents >= answer:
+                solution1 = house
+            else:
+                if house % 100000 == 0:
+                    print('House', house, 'gets', presents, 'presents.')
+                house += 1
+                presents = 0
+                elves = []
+
+    #Part 2
+        from math import sqrt
+        answer = 36000000
+        house = 1
+        presents = 0
+        elves = []
+        visits = {}
+
+        while presents <= answer:
+            for elf in range(1, int(sqrt(house)) + 1):
+                if house % elf == 0:
+                    if elf not in visits or visits[elf] <= 49:
+                        elves.append(elf)
+                        if elf not in visits:
+                            visits[elf] = 1
+                        else:
+                            visits[elf] += 1
+                    if int(house / elf) not in visits or visits[int(house / elf)] <= 49 and house != elf:
+                        elves.append(int(house / elf))
+                        if int(house / elf) not in visits:
+                            visits[int(house / elf)] = 1
+                        else:
+                            visits[int(house / elf)] += 1
+            elves = list(set(elves))
+            presents = sum(elves) * 11
+            if presents >= answer:
+                solution2 = house
+            else:
+                if house % 100000 == 0:
+                    print('House', house, 'gets', presents, 'presents.')
+                house += 1
+                presents = 0
+                elves = []
+
+        return solution1, solution2;
 
 # Match solution to function
     if year == "2015":
@@ -1268,5 +1698,10 @@ def solution(year, day, part1_input, part2_input):
         if day == "13": solution1, solution2 = day13_2015(part1_input)
         if day == "14": solution1, solution2 = day14_2015(part1_input)
         if day == "15": solution1, solution2 = day15_2015(part1_input)
+        if day == "16": solution1, solution2 = day16_2015(part1_input)
+        if day == "17": solution1, solution2 = day17_2015(part1_input)
+        if day == "18": solution1, solution2 = day18_2015(part1_input)
+        if day == "19": solution1, solution2 = day19_2015(part1_input, part2_input)
+        if day == "20": solution1, solution2 = day20_2015(part1_input)
 
     return solution1, solution2

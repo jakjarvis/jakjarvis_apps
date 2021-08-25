@@ -3,44 +3,60 @@
 {% block content %}
 
 <h2>Available Solutions</h2>
-<form action="{% url 'solution' %}" enctype="multipart/form-data" method="POST">
-    {% csrf_token %}
-    <h4>Year</h4>
-    <select name="year">
-        <option>2015</option>
-    </select>
-    <h4>Day</h4>
-    <select name="day" id="day" onchange="format_function(this)">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-    </select>
-    <h4 id="part1_header">Input</h4>
-    <input type="text" name="part1_text" id="part1_text">
-    <p id="text_disclaimer">Please copy and paste the input as a single string into this text box.</p>
-    <input type="file" name="part1_file" id="part1_file" class="d-none">
-    <p id="file_disclaimer" class="d-none">Due to the size of this input, please copy-paste it into a .txt file and upload it here.</p>
-    <p id="time_warning" class="d-none" style="color:red">WARNING: Due to the computing power required,
-        running this online may take a long time or even not resolve.
-        If so, refer to the solution code and run on a local machine.</p>
-    <h4 id="part2_header" class="d-none">Input - Part 2</h4>
-    <input type="text" name="part2_text" id="part2_text" value="NA" class="d-none">
-    <br>
-    <input type="submit" value="Solve!" class="btn btn-success">
-</form>
-
+<div style="display:flex; flex-direction:row">
+    <form action="{% url 'solution' %}" enctype="multipart/form-data" method="POST" style="width:50%">
+        {% csrf_token %}
+        <h4>Year</h4>
+        <select name="year">
+            <option>2015</option>
+        </select>
+        <h4>Day</h4>
+        <select name="day" id="day" onchange="format_function(this)">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+        </select>
+        <h4 id="part1_header">Input</h4>
+        <h5 id="sub1_2015_19" class="d-none">Replacements</h5>
+        <input type="text" name="part1_text" id="part1_text">
+        <p id="text_disclaimer">Please copy and paste the input as a single string into this text box.</p>
+        <input type="file" name="part1_file" id="part1_file" class="d-none">
+        <p id="file_disclaimer" class="d-none">Due to the size of this input, please copy-paste it into a .txt file and upload it here.</p>
+        <p id="time_warning" class="d-none" style="color:red">WARNING: Due to the computing power required,
+            running this online may take a long time or even not resolve.
+            If so, refer to the solution code and run on a local machine:
+            https://github.com/jakjarvis/Jupyter-notebooks/blob/main/Advent%20of%20Code%202015/Day%2015.ipynb</p>
+        <h4 id="part2_header" class="d-none">Input</h4>
+        <h5 id="sub2_2015_19" class="d-none">Molucule</h5>
+        <input type="text" name="part2_text" id="part2_text" class="d-none">
+        <br>
+        <br>
+        <input type="submit" value="Solve!" class="btn btn-success">
+    </form>
+    <div id="ticker_img" style="max-width:50%; max-height:200px; padding-left:20px" class="d-none">
+        <img src="../media/advent/AoC_2015_16_Ticker.PNG" alt="ticker">
+        <p style="color:red">If this is not your assigned ticker, this calculator will unfortunately not work for you.
+            Please use the solution at https://github.com/jakjarvis/ Jupyter-notebooks/blob/main/ Advent%20of%20Code%202015/ Day%2015.ipynb
+            and alter the dictionary 'answer' to match your own ticker.</p>
+    </div>
+</div>
 <ul>
     {% for puzzle in puzzles %}
     <li>
@@ -56,7 +72,11 @@
         var part1_file = document.getElementById("part1_file");
         var text_disclaimer = document.getElementById("text_disclaimer");
         var file_disclaimer = document.getElementById("file_disclaimer");
-        var time_warning = document.getElementById("time_warning")
+        var time_warning = document.getElementById("time_warning");
+        var ticker_img = document.getElementById("ticker_img");
+        var sub1_2015_19 = document.getElementById("sub1_2015_19");
+        var part2_text = document.getElementById("part2_text");
+        var sub2_2015_19 = document.getElementById("sub2_2015_19");
 
         if(a == '12') {
             part1_text.classList.add("d-none");
@@ -76,6 +96,25 @@
         }
         else {
             time_warning.classList.add("d-none");
+        }
+
+        if(a =='16') {
+            ticker_img.classList.remove("d-none");
+        }
+        else {
+            ticker_img.classList.add("d-none");
+        }
+        if(a =='19') {
+            sub1_2015_19.classList.remove("d-none");
+            part2_text.classList.remove("d-none");
+            sub2_2015_19.classList.remove("d-none");
+            text_disclaimer.classList.add("d-none");
+        }
+        else {
+            sub1_2015_19.classList.add("d-none");
+            part2_text.classList.add("d-none");
+            sub2_2015_19.classList.add("d-none");
+            text_disclaimer.classList.remove("d-none");
         }
     }
 </script>
