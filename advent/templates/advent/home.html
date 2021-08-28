@@ -32,9 +32,15 @@
             <option value="18">18</option>
             <option value="19">19</option>
             <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
         </select>
         <h4 id="part1_header">Input</h4>
         <h5 id="sub1_2015_19" class="d-none">Replacements</h5>
+        <h5 id="sub1_2015_25" class="d-none">Row</h5>
         <input type="text" name="part1_text" id="part1_text">
         <p id="text_disclaimer">Please copy and paste the input as a single string into this text box.</p>
         <input type="file" name="part1_file" id="part1_file" class="d-none">
@@ -45,6 +51,7 @@
             https://github.com/jakjarvis/Jupyter-notebooks/blob/main/Advent%20of%20Code%202015/Day%2015.ipynb</p>
         <h4 id="part2_header" class="d-none">Input</h4>
         <h5 id="sub2_2015_19" class="d-none">Molucule</h5>
+        <h5 id="sub2_2015_25" class="d-none">Column</h5>
         <input type="text" name="part2_text" id="part2_text" class="d-none">
         <br>
         <br>
@@ -55,6 +62,12 @@
         <p style="color:red">If this is not your assigned ticker, this calculator will unfortunately not work for you.
             Please use the solution at https://github.com/jakjarvis/ Jupyter-notebooks/blob/main/ Advent%20of%20Code%202015/ Day%2015.ipynb
             and alter the dictionary 'answer' to match your own ticker.</p>
+    </div>
+    <div id="shop_img" style="max-width:50%; max-height:200px; padding-left:20px" class="d-none">
+        <img src="../media/advent/AoC_2015_21_Shop.PNG" alt="ticker">
+        <p style="color:red">If this is not your assigned shop, this calculator will unfortunately not work for you.
+            Please use the solution at https://github.com/jakjarvis/ Jupyter-notebooks/blob/main/ Advent%20of%20Code%202021/ Day%2015.ipynb
+            and alter the dictionaries 'weaponsIn', 'armorsIn' and 'ringsIn' to match your own shop.</p>
     </div>
 </div>
 <ul>
@@ -70,51 +83,108 @@
         const a = element.options[element.selectedIndex].value;
         var part1_text = document.getElementById("part1_text");
         var part1_file = document.getElementById("part1_file");
+        var part2_text = document.getElementById("part2_text");
         var text_disclaimer = document.getElementById("text_disclaimer");
         var file_disclaimer = document.getElementById("file_disclaimer");
         var time_warning = document.getElementById("time_warning");
         var ticker_img = document.getElementById("ticker_img");
+        var shop_img = document.getElementById("shop_img");
         var sub1_2015_19 = document.getElementById("sub1_2015_19");
-        var part2_text = document.getElementById("part2_text");
         var sub2_2015_19 = document.getElementById("sub2_2015_19");
+        var sub1_2015_25 = document.getElementById("sub1_2015_25");
+        var sub1_2015_25 = document.getElementById("sub1_2015_25");
 
         if(a == '12') {
             part1_text.classList.add("d-none");
-            text_disclaimer.classList.add("d-none");
             part1_file.classList.remove("d-none");
-            file_disclaimer.classList.remove("d-none");
-        }
-        else {
-            part1_text.classList.remove("d-none");
-            text_disclaimer.classList.remove("d-none");
-            part1_file.classList.add("d-none");
-            file_disclaimer.classList.add("d-none");
-        }
-
-        if(a =='15') {
-            time_warning.classList.remove("d-none");
-        }
-        else {
-            time_warning.classList.add("d-none");
-        }
-
-        if(a =='16') {
-            ticker_img.classList.remove("d-none");
-        }
-        else {
-            ticker_img.classList.add("d-none");
-        }
-        if(a =='19') {
-            sub1_2015_19.classList.remove("d-none");
-            part2_text.classList.remove("d-none");
-            sub2_2015_19.classList.remove("d-none");
-            text_disclaimer.classList.add("d-none");
-        }
-        else {
-            sub1_2015_19.classList.add("d-none");
             part2_text.classList.add("d-none");
-            sub2_2015_19.classList.add("d-none");
+            text_disclaimer.classList.add("d-none");
+            file_disclaimer.classList.remove("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
+        } else if(a =='15') {
+            part1_text.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            part2_text.classList.add("d-none");
             text_disclaimer.classList.remove("d-none");
+            file_disclaimer.classList.add("d-none");
+            time_warning.classList.remove("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
+        } else if(a =='16') {
+            part1_text.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            part2_text.classList.add("d-none");
+            text_disclaimer.classList.remove("d-none");
+            file_disclaimer.classList.add("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.remove("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
+        } else if(a =='19') {
+            part1_text.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            part2_text.classList.remove("d-none");
+            text_disclaimer.classList.add("d-none");
+            file_disclaimer.classList.add("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.remove("d-none");
+            sub2_2015_19.remove("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
+        } else if(a =='21') {
+            part1_text.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            part2_text.classList.add("d-none");
+            text_disclaimer.classList.remove("d-none");
+            file_disclaimer.classList.add("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.remove("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
+        } else if(a =='25') {
+            part1_text.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            part2_text.classList.remove("d-none");
+            text_disclaimer.classList.add("d-none");
+            file_disclaimer.classList.add("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.remove("d-none");
+            sub2_2015_25.remove("d-none");
+        } else {
+            part1_text.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            part2_text.classList.add("d-none");
+            text_disclaimer.classList.remove("d-none");
+            file_disclaimer.classList.add("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
         }
     }
 </script>

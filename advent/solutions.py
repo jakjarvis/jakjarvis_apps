@@ -1681,6 +1681,444 @@ def solution(year, day, part1_input, part2_input):
 
         return solution1, solution2;
 
+#Day 21
+    def day21_2015(part1_input):
+        import pandas as pd
+        import itertools
+
+        split_input = part1_input.split()
+        input_list = []
+        counter = 0
+        while counter < len(split_input):
+            if split_input[counter][-1] == ':':
+                input_list += [' '.join(split_input[(counter + 1):(counter + 2)])]
+                split_input = split_input[(counter + 2):]
+                counter = 0
+            else:
+                counter += 1
+
+        weaponsIn = {'Name': ['Dagger', 'Shortsword', 'Warhammer', 'Longsword', 'Greataxe'],
+                     'Cost': [8, 10, 25, 40, 74], 'Damage': [4, 5, 6, 7, 8], 'Defense': [0, 0, 0, 0, 0]}
+        weapons = pd.DataFrame(data=weaponsIn)
+
+        armorsIn = {'Name': ['Empty', 'Leather', 'Chainmail', 'Splintmail', 'Bandedmail', 'Platemail'],
+                    'Cost': [0, 13, 31, 53, 75, 102], 'Damage': [0, 0, 0, 0, 0, 0], 'Defense': [0, 1, 2, 3, 4, 5]}
+        armors = pd.DataFrame(data=armorsIn)
+
+        ringsIn = {
+            'Name': ['Empty', 'Empty', 'Damage+1', 'Damage+2', 'Damage+3', 'Defense+1', 'Defense+2', 'Defense+3'],
+            'Cost': [0, 0, 25, 50, 100, 20, 40, 80], 'Damage': [0, 0, 1, 2, 3, 0, 0, 0],
+            'Defense': [0, 0, 0, 0, 0, 1, 2, 3]}
+        rings = pd.DataFrame(data=ringsIn)
+
+        Boss = {'HP': int(input_list[0]), 'Damage': int(input_list[1]), 'Defense': int(input_list[2])}
+        Jono = {'HP': 100, 'Damage': 0, 'Defense': 0}
+
+        pairsIn = {}
+        counter = 0
+        for pair in itertools.combinations(rings.index, 2):
+            pairsIn[counter] = [pair[0], pair[1], rings.at[pair[0], 'Cost'] + rings.at[pair[1], 'Cost'],
+                                rings.at[pair[0], 'Damage'] + rings.at[pair[1], 'Damage'],
+                                rings.at[pair[0], 'Defense'] + rings.at[pair[1], 'Defense']]
+            counter += 1
+        pairs = pd.DataFrame(data=pairsIn, index=['Ring 1', 'Ring 2', 'Cost', 'Damage', 'Defense']).T.sort_values(
+            by=['Cost']).reset_index()
+        del pairs['index']
+
+        shop = []
+        shop += list(weapons.index), list(armors.index), list(pairs.index)
+        inventories = []
+        for x in list(itertools.product(*shop)):
+            totalCost = 0
+            totalCost = weapons['Cost'][x[0]] + armors['Cost'][x[1]] + pairs['Cost'][x[2]]
+            inventories += [[totalCost, x[0], x[1], x[2]]]
+        inventories.sort(key=lambda x: x[0])
+
+        win = False
+        loss = False
+        for inventory in inventories:
+            if win == True:
+                break
+            else:
+                Jono['HP'] = 100
+                Boss['HP'] = int(input_list[0])
+                loss = False
+            Jono['Damage'] = weapons['Damage'][inventory[1]] + pairs['Damage'][inventory[3]]
+            Jono['Defense'] = armors['Defense'][inventory[2]] + pairs['Defense'][inventory[3]]
+            while win == False and loss == False:
+                if Jono['Damage'] - Boss['Defense'] >= 1:
+                    Boss['HP'] -= Jono['Damage'] - Boss['Defense']
+                else:
+                    Boss['HP'] -= 1
+                if Boss['HP'] <= 0:
+                    win = True
+                    winningSet = [weapons['Name'][inventory[1]], armors['Name'][inventory[2]],
+                                  rings['Name'][pairs['Ring 1'][inventory[3]]],
+                                  rings['Name'][pairs['Ring 2'][inventory[3]]]]
+                    solution1 = inventory[0]
+                    break
+                elif Boss['Damage'] - Jono['Defense'] >= 1:
+                    Jono['HP'] -= Boss['Damage'] - Jono['Defense']
+                else:
+                    Jono['HP'] -= 1
+                if Jono['HP'] <= 0:
+                    loss = True
+
+        #Part 2
+
+        inventories = []
+        for x in list(itertools.product(*shop)):
+            totalCost = 0
+            totalCost = weapons['Cost'][x[0]] + armors['Cost'][x[1]] + pairs['Cost'][x[2]]
+            inventories += [[totalCost, x[0], x[1], x[2]]]
+        inventories.sort(key=lambda x: x[0], reverse=True)
+
+        win = False
+        loss = False
+        for inventory in inventories:
+            if loss == True:
+                break
+            else:
+                Jono['HP'] = 100
+                Boss['HP'] = int(input_list[0])
+                win = False
+            Jono['Damage'] = weapons['Damage'][inventory[1]] + pairs['Damage'][inventory[3]]
+            Jono['Defense'] = armors['Defense'][inventory[2]] + pairs['Defense'][inventory[3]]
+            while win == False and loss == False:
+                if Jono['Damage'] - Boss['Defense'] >= 1:
+                    Boss['HP'] -= Jono['Damage'] - Boss['Defense']
+                else:
+                    Boss['HP'] -= 1
+                if Boss['HP'] <= 0:
+                    win = True
+                    winningSet = [weapons['Name'][inventory[1]], armors['Name'][inventory[2]],
+                                  rings['Name'][pairs['Ring 1'][inventory[3]]],
+                                  rings['Name'][pairs['Ring 2'][inventory[3]]]]
+                elif Boss['Damage'] - Jono['Defense'] >= 1:
+                    Jono['HP'] -= Boss['Damage'] - Jono['Defense']
+                else:
+                    Jono['HP'] -= 1
+                if Jono['HP'] <= 0:
+                    loss = True
+                    losingSet = [weapons['Name'][inventory[1]], armors['Name'][inventory[2]],
+                                 rings['Name'][pairs['Ring 1'][inventory[3]]],
+                                 rings['Name'][pairs['Ring 2'][inventory[3]]]]
+                    solution2 = inventory[0]
+
+        return solution1, solution2
+
+#Day 22
+    def day22_2015(part1_input):
+        split_input = part1_input.split()
+        input_list = []
+        counter = 0
+        while counter < len(split_input):
+            if split_input[counter][-1] == ':':
+                input_list += [' '.join(split_input[(counter + 1):(counter + 2)])]
+                split_input = split_input[(counter + 2):]
+                counter = 0
+            else:
+                counter += 1
+
+        bossStats = {'HP': int(input_list[0]), 'Damage': int(input_list[1])}
+        jonoStats = {'HP': 50, 'Mana': 500}
+
+        def newRound(oldSequences, topScore):
+            newSequences = {}
+            for sequence in oldSequences:
+                newSequence = ''
+                if manaLeft(sequence, bossStats, jonoStats) >= 53:
+                    newSequences, topScore = newSpell(sequence, bossStats, jonoStats, 'm', topScore, newSequences)
+                if manaLeft(sequence, bossStats, jonoStats) >= 73:
+                    newSequences, topScore = newSpell(sequence, bossStats, jonoStats, 'd', topScore, newSequences)
+                if manaLeft(sequence, bossStats, jonoStats) >= 113 and 's' not in sequence[-2:]:
+                    newSequences, topScore = newSpell(sequence, bossStats, jonoStats, 's', topScore, newSequences)
+                if manaLeft(sequence, bossStats, jonoStats) >= 173 and 'p' not in sequence[-2:]:
+                    newSequences, topScore = newSpell(sequence, bossStats, jonoStats, 'p', topScore, newSequences)
+                if manaLeft(sequence, bossStats, jonoStats) >= 229 and 'r' not in sequence[-2:]:
+                    newSequences, topScore = newSpell(sequence, bossStats, jonoStats, 'r', topScore, newSequences)
+            return newSequences, topScore
+
+        def manaLeft(sequence, bossStats, jonoStats):
+            mana = jonoStats['Mana']
+            for attack in sequence:
+                if attack == 'm':
+                    mana -= 53
+                elif attack == 'd':
+                    mana -= 73
+                elif attack == 's':
+                    mana -= 113
+                elif attack == 'p':
+                    mana -= 173
+                elif attack == 'r':
+                    mana -= 229
+            if sequence[-1] == 'r':
+                mana += ((sequence[:-1].count('r')) * 505 + 101)
+            elif len(sequence) >= 2 and sequence[-2] == 'r':
+                mana += ((sequence[:-2].count('r')) * 505 + 303)
+            else:
+                mana += ((sequence.count('r')) * 505)
+            return mana
+
+        def newSpell(sequence, bossStats, jonoStats, spell, topScore, newSequences):
+            newSequence = sequence + spell
+            if winCheck(newSequence, bossStats, jonoStats) == True and manaUsed(newSequence, bossStats,
+                                                                                jonoStats) <= topScore:
+                topScore = manaUsed(newSequence, bossStats, jonoStats)
+            elif deadCheck(newSequence, bossStats, jonoStats) == True:
+                pass
+            elif manaUsed(newSequence, bossStats, jonoStats) <= topScore:
+                newSequences[newSequence] = manaUsed(newSequence, bossStats, jonoStats)
+            return newSequences, topScore
+
+        def winCheck(sequence, bossStats, jonoStats):
+            win = False
+            if sequence[-1] == 'p':
+                if sequence.count('m') * 4 + sequence.count('d') * 2 + sequence.count('p') * 18 - 15 >= bossStats['HP']:
+                    win = True
+            elif len(sequence) >= 2 and sequence[-2] == 'p':
+                if sequence.count('m') * 4 + sequence.count('d') * 2 + sequence.count('p') * 18 - 9 >= bossStats['HP']:
+                    win = True
+            elif len(sequence) >= 3 and sequence[-3] == 'p':
+                if sequence.count('m') * 4 + sequence.count('d') * 2 + sequence.count('p') * 18 - 3 >= bossStats['HP']:
+                    win = True
+            else:
+                if sequence.count('m') * 4 + sequence.count('d') * 2 + sequence.count('p') * 18 >= bossStats['HP']:
+                    win = True
+            return win
+
+        def deadCheck(sequence, bossStats, jonoStats):
+            dead = False
+            if sequence[-1] == 's':
+                if ((sequence[:-1].count('s')) * 3 + 1) * (bossStats['Damage'] - 7) + (
+                        len(sequence) - ((sequence[:-1].count('s')) * 3 + 1)) * bossStats['Damage'] - sequence.count(
+                        'd') * 2 >= jonoStats['HP']:
+                    dead = True
+            elif len(sequence) >= 2 and sequence[-2] == 's':
+                if ((sequence[:-2].count('s')) * 3 + 2) * (bossStats['Damage'] - 7) + (
+                        len(sequence) - ((sequence[:-2].count('s')) * 3 + 2)) * bossStats['Damage'] - sequence.count(
+                        'd') * 2 >= jonoStats['HP']:
+                    dead = True
+            else:
+                if ((sequence.count('s')) * 3) * (bossStats['Damage'] - 7) + (
+                        len(sequence) - (sequence.count('s')) * 3) * bossStats['Damage'] - sequence.count('d') * 2 >= \
+                        jonoStats['HP']:
+                    dead = True
+            return dead
+
+        def manaUsed(sequence, bossStats, jonoStats):
+            mana = 0
+            for attack in sequence:
+                if attack == 'm':
+                    mana += 53
+                elif attack == 'd':
+                    mana += 73
+                elif attack == 's':
+                    mana += 113
+                elif attack == 'p':
+                    mana += 173
+                elif attack == 'r':
+                    mana += 229
+            return mana
+
+        attackSequences = {'m': 53, 'd': 73, 's': 113, 'p': 173, 'r': 229}
+        topScore = 10000
+        counter = 0
+
+        while len(attackSequences) >= 1:
+            counter += 1
+            attackSequences, topScore = newRound(attackSequences, topScore)
+            solution1 = topScore
+
+        bossStats = {'HP': int(input_list[0]), 'Damage': int(input_list[1]) + 1}
+        jonoStats = {'HP': 49, 'Mana': 500}
+
+        attackSequences = {'m': 53, 'd': 73, 's': 113, 'p': 173, 'r': 229}
+        topScore = 10000
+        counter = 0
+
+        while len(attackSequences) >= 1:
+            counter += 1
+            attackSequences, topScore = newRound(attackSequences, topScore)
+            solution2 = topScore
+
+        return solution1, solution2
+
+#Day 23
+    def day23_2015(part1_input):
+        split_input = part1_input.split()
+        input_list = []
+        while len(split_input) > 0:
+            if split_input[1][-1] == ',':
+                input_list += [split_input[:3]]
+                split_input = split_input[3:]
+            else:
+                input_list += [split_input[:2]]
+                split_input = split_input[2:]
+
+        def solver(regA, regB, inpt):
+            step = 0
+            while step <= len(inpt) - 1:
+                if inpt[step][0] == 'hlf':
+                    if inpt[step][1] == 'a':
+                        regA = int(regA / 2)
+                    else:
+                        regB = int(regB / 2)
+                    step += 1
+                elif inpt[step][0] == 'tpl':
+                    if inpt[step][1] == 'a':
+                        regA = regA * 3
+                    else:
+                        regB = regB * 3
+                    step += 1
+                elif inpt[step][0] == 'inc':
+                    if inpt[step][1] == 'a':
+                        regA += 1
+                    else:
+                        regB += 1
+                    step += 1
+                elif inpt[step][0] == 'jmp':
+                    if inpt[step][1][1:] == '0':
+                        print('Jump 0 creates an infinate loop!')
+                        break
+                    if inpt[step][1][0] == '+':
+                        step += int(inpt[step][1][1:])
+                    elif inpt[step][1][0] == '-':
+                        step -= int(inpt[step][1][1:])
+                    else:
+                        print('No +/- sign for jump step.')
+                elif inpt[step][0] == 'jie':
+                    if 'a' in inpt[step][1] and regA % 2 == 0:
+                        if inpt[step][1][1:] == '0':
+                            # To avoid an infinate loop, write a break clause for 'jump 0'
+                            print('Jump 0 creates an infinate loop!')
+                            break
+                        elif inpt[step][2][0] == '+':
+                            step += int(inpt[step][2][1:])
+                        elif inpt[step][2][0] == '-':
+                            step -= int(inpt[step][2][1:])
+                        else:
+                            print('No +/- sign for jump step.')
+                            break
+                    elif 'b' in inpt[step][1] and regB % 2 == 0:
+                        if inpt[step][1][1:] == '0':
+                            print('Jump 0 creates an infinate loop!')
+                            break
+                        elif inpt[step][2][0] == '+':
+                            step += int(inpt[step][2][1:])
+                        elif inpt[step][2][0] == '-':
+                            step -= int(inpt[step][2][1:])
+                        else:
+                            print('No +/- sign for jump step.')
+                            break
+                    else:
+                        step += 1
+                elif inpt[step][0] == 'jio':
+                    if 'a' in inpt[step][1] and regA == 1:
+                        if inpt[step][1][1:] == '0':
+                            print('Jump 0 creates an infinate loop!')
+                            break
+                        if inpt[step][2][0] == '+':
+                            step += int(inpt[step][2][1:])
+                        elif inpt[step][2][0] == '-':
+                            step -= int(inpt[step][2][1:])
+                        else:
+                            print('No +/- sign for jump step.')
+                            break
+                    elif 'b' in inpt[step][1] and regB == 1:
+                        if inpt[step][1][1:] == '0':
+                            print('Jump 0 creates an infinate loop!')
+                            break
+                        if inpt[step][2][0] == '+':
+                            step += int(inpt[step][2][1:])
+                        elif inpt[step][2][0] == '-':
+                            step -= int(inpt[step][2][1:])
+                        else:
+                            print('No +/- sign for jump step.')
+                            break
+                    else:
+                        step += 1
+
+            return regB
+
+        solution1 = solver(int(0), int(0), input_list)
+        solution2 = solver(int(1), int(0), input_list)
+
+        return solution1, solution2
+
+#Day 24
+    def day24_2015(part1_input):
+        import math
+        split_input = part1_input.split()
+        input_list = []
+        while len(split_input) > 0:
+            input_list += [int(split_input[0])]
+            split_input = split_input[1:]
+
+        groupWeight = sum(input_list) / 3
+
+        def addPackage(group, remainingPackages, groupWeight, winner):
+            for package in remainingPackages:
+                newGroup1 = group + [package]
+                if sum(newGroup1) == groupWeight:
+                    if winner['Group'] == [] or len(newGroup1) <= len(winner['Group']) - 1:
+                        winner['Group'] = newGroup1
+                        winner['Entanglement'] = math.prod(newGroup1)
+                    elif len(newGroup1) == len(winner['Group']):
+                        if math.prod(newGroup1) <= winner['Entanglement']:
+                            winner['Group'] = newGroup1
+                            winner['Entanglement'] = math.prod(newGroup1)
+                elif sum(newGroup1) <= groupWeight and (winner['Group'] == [] or len(newGroup1) <= len(winner[
+                                                                                                           'Group']) - 1):  # can do -2, because if the subgroup is within 1 of the winning one, any subsequent combos will enherently have a greater product
+                    packagesLeft = remainingPackages[remainingPackages.index(package) + 1:]
+                    winner = addPackage(newGroup1, packagesLeft, groupWeight, winner)
+            return winner
+
+        winner = {'Group': [], 'Entanglement': 0}
+        startingGroup = []
+        winner = addPackage(startingGroup, input_list, groupWeight, winner)
+        solution1 = winner['Entanglement']
+
+        groupWeight = sum(input_list) / 4
+        winner = {'Group': [], 'Entanglement': 0}
+        startingGroup = []
+        winner = addPackage(startingGroup, input_list, groupWeight, winner)
+        solution2 = winner['Entanglement']
+
+        return solution1, solution2
+
+#Day 25
+    def day25_2015(part1_input, part2_input):
+        seqPosition = 1
+        columnRef = 1
+        rowRef = 1
+        while columnRef != int(part2_input) or rowRef != int(part1_input):
+            if rowRef == 1:
+                rowRef = columnRef + 1
+                columnRef = 1
+                seqPosition += 1
+            else:
+                columnRef += 1
+                rowRef -= 1
+                seqPosition += 1
+
+        initialCode = 20151125
+
+        def nextCode(inputCode):
+            outputCode = (inputCode * 252533) % 33554393
+            return outputCode
+
+        code = initialCode
+        for x in range(seqPosition - 1):
+            code = nextCode(code)
+            if x % 1000000 == 0:
+                print('Processing code', x)
+
+        solution1 = code
+        solution2 = 'This star is for freeeee!'
+
+        return solution1, solution2
+
 # Match solution to function
     if year == "2015":
         if day == "1": solution1, solution2 = day1_2015(part1_input)
@@ -1703,5 +2141,10 @@ def solution(year, day, part1_input, part2_input):
         if day == "18": solution1, solution2 = day18_2015(part1_input)
         if day == "19": solution1, solution2 = day19_2015(part1_input, part2_input)
         if day == "20": solution1, solution2 = day20_2015(part1_input)
+        if day == "21": solution1, solution2 = day21_2015(part1_input)
+        if day == "22": solution1, solution2 = day22_2015(part1_input)
+        if day == "23": solution1, solution2 = day23_2015(part1_input)
+        if day == "24": solution1, solution2 = day24_2015(part1_input)
+        if day == "25": solution1, solution2 = day25_2015(part1_input, part2_input)
 
     return solution1, solution2
