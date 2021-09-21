@@ -39,6 +39,7 @@ app.layout = html.Div([
      Input('my_prices', 'value'),
      Input('first_dates', 'value')
      ])
+
 def update_graph(stock_ticker, prices, first_date, **kwargs):
     end = datetime.today().date()
 
@@ -60,7 +61,7 @@ def update_graph(stock_ticker, prices, first_date, **kwargs):
 
     fig = {
         'data':traces,
-        'layout':{'title':stock_ticker}
+        'layout':{'title':'Stock ticker'}
     }
     return fig
 
