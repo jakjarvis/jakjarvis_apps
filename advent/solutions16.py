@@ -148,6 +148,8 @@ def day3_2016(part1_input):
 def day4_2016(part1_input):
     import pandas as pd
 
+    part1_input = part1_input.decode("utf-8")  # the file reads in as a bytes (b') type - need to convert it to string type
+
     def check_room(room):
         room_parts = room.split('-')
         id_check = room_parts[-1][:-1]
@@ -182,7 +184,7 @@ def day4_2016(part1_input):
             if letter_ord >= (96 + 27):
                 letter_ord -= 26
             real_name += chr(letter_ord)
-
+        print(real_name)
         right_room = False
         if real_name == 'northpoleobjectstorage':
             right_room = True
@@ -194,11 +196,12 @@ def day4_2016(part1_input):
         character = 0
         while len(part1_input) != 0:
             if part1_input[character] == ']':
-                input_list += [part1_input[:character + 1]]
+                input_list += [part1_input[:character + 1].replace("\n", "").replace("\r", "")]
                 part1_input = part1_input[character + 1:]
                 character = 0
             else:
                 character += 1
+        print(input_list)
 
         part1_solution = 0
         part2_solution = 0
