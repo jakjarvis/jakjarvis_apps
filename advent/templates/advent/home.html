@@ -81,7 +81,7 @@
 
 <script>
     function format_function(element){
-        const a = element.options[element.selectedIndex].value;
+        const day = element.options[element.selectedIndex].value;
         var part1_text = document.getElementById("part1_text");
         var part1_file = document.getElementById("part1_file");
         var part2_text = document.getElementById("part2_text");
@@ -95,7 +95,7 @@
         var sub1_2015_25 = document.getElementById("sub1_2015_25");
         var sub1_2015_25 = document.getElementById("sub1_2015_25");
 
-        if(a == '12' && ) {
+        if(day == '12') {
             part1_text.classList.add("d-none");
             part1_file.classList.remove("d-none");
             part2_text.classList.add("d-none");
@@ -108,7 +108,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(a =='15') {
+        } else if(day =='15') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.add("d-none");
@@ -121,7 +121,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(a =='16') {
+        } else if(day =='16') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.add("d-none");
@@ -134,7 +134,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(a =='19') {
+        } else if(day =='19') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.remove("d-none");
@@ -147,7 +147,7 @@
             sub2_2015_19.remove("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(a =='21') {
+        } else if(day =='21') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.add("d-none");
@@ -160,7 +160,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(a =='25') {
+        } else if(day =='25') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.remove("d-none");
