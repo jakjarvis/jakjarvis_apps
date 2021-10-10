@@ -144,3 +144,100 @@ def day3_2016(part1_input):
         solution2 = total_triangles - invalid_triangles
 
     return solution1, solution2
+
+def day4_2016(part1_input):
+    import pandas as pd
+
+    def check_room(room):
+        room_parts = room.split('-')
+        id_check = room_parts[-1][:-1]
+        room_parts = room_parts[:-1]
+        room_parts += id_check.split('[')
+
+        number = room_parts[-2]
+
+        room_name = ''
+        for name_part in room_parts[:-2]:
+            room_name += name_part
+        letter_count = {}
+        for character in room_name:
+            if character in letter_count:
+                letter_count[character] += 1
+            else:
+                letter_count[character] = 1
+
+        letter_frame = pd.DataFrame(letter_count.items(), index=range(len(letter_count)))
+        letter_frame = letter_frame.sort_values([1, 0], ascending=[False, True])
+        true_checksum = ''.join(letter_frame[0][:5].values.tolist())
+
+        valid = False
+        if room_parts[-1] == true_checksum:
+            valid = True
+
+        # Part 2
+        real_name = ''
+        for character in room_name:
+            letter_ord = ord(character)
+            letter_ord += int(number) % 26
+            if letter_ord >= (96 + 27):
+                letter_ord -= 26
+            real_name += chr(letter_ord)
+
+        right_room = False
+        if real_name == 'northpoleobjectstorage':
+            right_room = True
+
+        return valid, number, right_room
+
+    def solver(part1_input):
+        input_list = []
+        character = 0
+        while len(part1_input) != 0:
+            if part1_input[character] == ']':
+                input_list += [part1_input[:character + 1]]
+                part1_input = part1_input[character + 1:]
+                character = 0
+            else:
+                character += 1
+
+        part1_solution = 0
+        part2_solution = 0
+        for room in input_list:
+            valid, number, right_room = check_room(room)
+            if valid == True:
+                part1_solution += int(number)
+            if right_room == True:
+                part2_solution = number
+
+        return part1_solution, part2_solution
+
+    part1_solution, part2_solution = solver(part1_input)
+    return part1_solution, part2_solution
+
+def day5_2016(part1_input):
+    import hashlib
+    import collections
+    index = 0
+    part1_solution = ''
+    password_dict = {}
+    while len(password_dict) <= 7:
+        key = part1_input + str(index)
+        hashed_key = hashlib.md5(bytes(key, encoding='utf-8')).hexdigest()
+        if hashed_key[:5] == '00000':
+            if len(part1_solution) <= 7:
+                part1_solution += hashed_key[5]
+            if hashed_key[5] in ['0', '1', '2', '3', '4', '5', '6', '7']:
+                if hashed_key[5] not in password_dict.keys():
+                    location = hashed_key[5]
+                    value = hashed_key[6]
+                    password_dict[location] = value
+        index += 1
+        if index % 1000000 == 0:
+            print(index)
+
+    od = collections.OrderedDict(sorted(password_dict.items()))
+    part2_solution = ''
+    for value in od.values():
+        part2_solution += value
+
+    return part1_solution, part2_solution
