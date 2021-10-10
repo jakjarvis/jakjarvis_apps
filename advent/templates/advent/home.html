@@ -7,12 +7,12 @@
     <form action="{% url 'solution' %}" enctype="multipart/form-data" method="POST" style="width:50%">
         {% csrf_token %}
         <h4>Year</h4>
-        <select name="year">
-            <option>2015</option>
-            <option>2016</option>
+        <select name="year" id="year" onchange="year_function()">
+            <option value="2015">2015</option>
+            <option value="2016">2016</option>
         </select>
         <h4>Day</h4>
-        <select name="day" id="day" onchange="format_function(this)">
+        <select name="day" id="day" onchange="day_function(this)">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -80,8 +80,8 @@
 </ul>
 
 <script>
-    function format_function(element){
-        const day = element.options[element.selectedIndex].value;
+    // This function resets the Day to zero and the formatting to default when a new year is selected
+    function year_function(){
         var part1_text = document.getElementById("part1_text");
         var part1_file = document.getElementById("part1_file");
         var part2_text = document.getElementById("part2_text");
@@ -95,7 +95,38 @@
         var sub1_2015_25 = document.getElementById("sub1_2015_25");
         var sub1_2015_25 = document.getElementById("sub1_2015_25");
 
-        if(day == '12') {
+        day.options[0].selected = true;
+        part1_text.classList.remove("d-none");
+        part1_file.classList.add("d-none");
+        part2_text.classList.add("d-none");
+        text_disclaimer.classList.remove("d-none");
+        file_disclaimer.classList.add("d-none");
+        time_warning.classList.add("d-none");
+        ticker_img.classList.add("d-none");
+        shop_img.classList.add("d-none");
+        sub1_2015_19.add("d-none");
+        sub2_2015_19.add("d-none");
+        sub1_2015_25.add("d-none");
+        sub2_2015_25.add("d-none");
+    }
+
+    function day_function(element){
+        const day = element.options[element.selectedIndex].value;
+        var year = document.getElementById("year").value;
+        var part1_text = document.getElementById("part1_text");
+        var part1_file = document.getElementById("part1_file");
+        var part2_text = document.getElementById("part2_text");
+        var text_disclaimer = document.getElementById("text_disclaimer");
+        var file_disclaimer = document.getElementById("file_disclaimer");
+        var time_warning = document.getElementById("time_warning");
+        var ticker_img = document.getElementById("ticker_img");
+        var shop_img = document.getElementById("shop_img");
+        var sub1_2015_19 = document.getElementById("sub1_2015_19");
+        var sub2_2015_19 = document.getElementById("sub2_2015_19");
+        var sub1_2015_25 = document.getElementById("sub1_2015_25");
+        var sub1_2015_25 = document.getElementById("sub1_2015_25");
+
+        if(day == '12' && year == '2015') {
             part1_text.classList.add("d-none");
             part1_file.classList.remove("d-none");
             part2_text.classList.add("d-none");
@@ -108,7 +139,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(day =='15') {
+        } else if(day =='15' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.add("d-none");
@@ -121,7 +152,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(day =='16') {
+        } else if(day =='16' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.add("d-none");
@@ -134,7 +165,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(day =='19') {
+        } else if(day =='19' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.remove("d-none");
@@ -147,7 +178,7 @@
             sub2_2015_19.remove("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(day =='21') {
+        } else if(day =='21' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.add("d-none");
@@ -160,7 +191,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
-        } else if(day =='25') {
+        } else if(day =='25' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
             part2_text.classList.remove("d-none");
@@ -173,6 +204,19 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.remove("d-none");
             sub2_2015_25.remove("d-none");
+        } else if(day == '4' && year == '2016') {
+            part1_text.classList.add("d-none");
+            part1_file.classList.remove("d-none");
+            part2_text.classList.add("d-none");
+            text_disclaimer.classList.add("d-none");
+            file_disclaimer.classList.remove("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
         } else {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");

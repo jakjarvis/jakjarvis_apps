@@ -10,7 +10,7 @@ def solution(request):
     solution_ref = "Day" + request.POST.get('day') + ", " + request.POST.get('year')
     #part1_text = request.POST.get('part1_text')
     #part1_text = request.POST.get('part2_text')
-    if request.POST.get('day') == '12' and request.POST.get('year') == '2015':
+    if request.POST.get('day') == '12' and request.POST.get('year') == '2015' or request.POST.get('day') == '4' and request.POST.get('year') == '2016':
         part1_solution, part2_solution = solutions.solution(request.POST.get('year'),
                                                             request.POST.get('day'),
                                                             request.FILES['part1_file'].read(),
