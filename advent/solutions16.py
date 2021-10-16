@@ -244,3 +244,24 @@ def day5_2016(part1_input):
         part2_solution += value
 
     return part1_solution, part2_solution
+
+def day6_2016(part1_input, code_length):
+    input_list = []
+    while len(part1_input) >= 1:
+        input_list += [part1_input[:code_length]]
+        part1_input = part1_input[code_length:]
+    part1_solution = ''
+    part2_solution = ''
+    character_dict = {}
+    for character in range(code_length):
+        for code in range(len(input_list)):
+            if input_list[code][character] not in character_dict:
+                character_dict[input_list[code][character]] = 0
+            character_dict[input_list[code][character]] += 1
+            character_dict[input_list[code][character]] += 1
+        sorted_dict = sorted(character_dict.items(), key=lambda x: x[1], reverse=True)
+        part1_solution += sorted_dict[0][0]
+        sorted_dict = sorted(character_dict.items(), key=lambda x: x[1])
+        part2_solution += sorted_dict[0][0]
+        character_dict = {}
+    return part1_solution, part2_solution

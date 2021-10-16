@@ -14,3 +14,15 @@ class Stock(models.Model):
 
     def __str__(self):
         return self.ticker
+
+class Dividend(models.Model):
+    ticker = models.CharField(max_length=10)
+    memo = models.TextField(blank=True)
+    types = [('divd', 'Dividend'), ('right', 'Rights Sale')]
+    type = models.CharField(max_length=5, choices=types)
+    value = models.FloatField(default=0)
+    date = models.DateField(null=True, default=date.today)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.ticker

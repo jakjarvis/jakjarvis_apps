@@ -53,6 +53,8 @@
         <h4 id="part2_header" class="d-none">Input</h4>
         <h5 id="sub2_2015_19" class="d-none">Molucule</h5>
         <h5 id="sub2_2015_25" class="d-none">Column</h5>
+        <h5 id="sub2_2016_6" class="d-none">Column</h5>
+        <br>
         <input type="text" name="part2_text" id="part2_text" class="d-none">
         <br>
         <br>
@@ -93,7 +95,8 @@
         var sub1_2015_19 = document.getElementById("sub1_2015_19");
         var sub2_2015_19 = document.getElementById("sub2_2015_19");
         var sub1_2015_25 = document.getElementById("sub1_2015_25");
-        var sub1_2015_25 = document.getElementById("sub1_2015_25");
+        var sub2_2015_25 = document.getElementById("sub1_2015_25");
+        var sub2_2016_6 = document.getElementById("sub2_2016_6");
 
         day.options[0].selected = true;
         part1_text.classList.remove("d-none");
@@ -125,6 +128,7 @@
         var sub2_2015_19 = document.getElementById("sub2_2015_19");
         var sub1_2015_25 = document.getElementById("sub1_2015_25");
         var sub1_2015_25 = document.getElementById("sub1_2015_25");
+        var sub2_2016_6 = document.getElementById("sub2_2016_6");
 
         if(day == '12' && year == '2015') {
             part1_text.classList.add("d-none");
@@ -139,6 +143,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
+            sub2_2016_6.add("d-none");
         } else if(day =='15' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
@@ -152,6 +157,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
+            sub2_2016_6.add("d-none");
         } else if(day =='16' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
@@ -165,6 +171,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
+            sub2_2016_6.add("d-none");
         } else if(day =='19' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
@@ -178,6 +185,7 @@
             sub2_2015_19.remove("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
+            sub2_2016_6.add("d-none");
         } else if(day =='21' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
@@ -191,6 +199,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
+            sub2_2016_6.add("d-none");
         } else if(day =='25' && year == '2015') {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");
@@ -204,6 +213,7 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.remove("d-none");
             sub2_2015_25.remove("d-none");
+            sub2_2016_6.add("d-none");
         } else if(day == '4' && year == '2016') {
             part1_text.classList.add("d-none");
             part1_file.classList.remove("d-none");
@@ -217,6 +227,21 @@
             sub2_2015_19.add("d-none");
             sub1_2015_25.add("d-none");
             sub2_2015_25.add("d-none");
+            sub2_2016_6.add("d-none");
+        } else if(day =='6' && year == '2016') {
+            part1_text.classList.remove("d-none");
+            part1_file.classList.add("d-none");
+            part2_text.classList.remove("d-none");
+            text_disclaimer.classList.add("d-none");
+            file_disclaimer.classList.add("d-none");
+            time_warning.classList.add("d-none");
+            ticker_img.classList.add("d-none");
+            shop_img.classList.add("d-none");
+            sub1_2015_19.add("d-none");
+            sub2_2015_19.add("d-none");
+            sub1_2015_25.add("d-none");
+            sub2_2015_25.add("d-none");
+            sub2_2016_6.remove("d-none");
         } else {
             part1_text.classList.remove("d-none");
             part1_file.classList.add("d-none");

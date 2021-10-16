@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import StockForm
 from .models import Stock
+from .models import Dividend
 import stock.stock_evaluation as stock_evaluation
 import json
 from django.contrib.auth.decorators import login_required
@@ -24,11 +25,12 @@ def currentstocks(request):
 @login_required
 def portfolio(request):
         stocks = Stock.objects.filter(user=request.user)
-        unique_stocks = stock_evaluation.portfolio_dataframe(stocks).index.tolist()
-        average_prices = stock_evaluation.portfolio_dataframe(stocks)['Av_Buy_Price'].tolist()
-        first_dates = stock_evaluation.portfolio_dataframe(stocks)['First_Purchase'].tolist()
+        dividends = Dividend.objects.filter(user=request.user)
+        unique_stocks = stock_evaluation.portfolio_dataframe(stocks, dividends).index.tolist()
+        average_prices = stock_evaluation.portfolio_dataframe(stocks, dividends)['Av_Buy_Price'].tolist()
+        first_dates = stock_evaluation.portfolio_dataframe(stocks, dividends)['First_Purchase'].tolist()
 
-        portfolio = stock_evaluation.portfolio_dataframe(stocks).reset_index().rename(columns={'index':'Ticker'})
+        portfolio = stock_evaluation.portfolio_dataframe(stocks, dividends).reset_index().rename(columns={'index':'Ticker'})
         json_portfolio = portfolio.to_json(orient='records')
         data = []
         data = json.loads(json_portfolio)
