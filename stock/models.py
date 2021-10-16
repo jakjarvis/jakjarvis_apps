@@ -9,6 +9,8 @@ class Stock(models.Model):
     type = models.CharField(max_length=3, choices=transactions)
     volume = models.FloatField(default=0)
     price = models.FloatField(default=0)
+    currency = models.CharField(default='EUR', max_length=15)
+    currency_con = models.FloatField(default=1)
     date = models.DateField(null=True, default=date.today)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -21,6 +23,8 @@ class Dividend(models.Model):
     types = [('divd', 'Dividend'), ('right', 'Rights Sale')]
     type = models.CharField(max_length=5, choices=types)
     value = models.FloatField(default=0)
+    currency = models.CharField(default='EUR', max_length=15)
+    currency_con = models.FloatField(default=1)
     date = models.DateField(null=True, default=date.today)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
