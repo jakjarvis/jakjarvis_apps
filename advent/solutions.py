@@ -35,6 +35,8 @@ def solution(year, day, part1_input, part2_input):
         if day == "2": solution1, solution2 = solution16.day2_2016(part1_input)
         if day == "3": solution1, solution2 = solution16.day3_2016(part1_input)
         if day == "4": solution1, solution2 = solution16.day4_2016(part1_input)
+        if day == "5": solution1, solution2 = solution16.day5_2016(part1_input)
+        if day == "6": solution1, solution2 = solution16.day6_2016(part1_input, part2_input)
 
 
     return solution1, solution2

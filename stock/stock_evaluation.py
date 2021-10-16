@@ -30,8 +30,9 @@ def current_holdings(stocks):
                 print('Buy/Sell not specified')
     return holdings
 
-def portfolio_dataframe(stocks):
+def portfolio_dataframe(stocks, dividends):
     transactions_df = transactions_dataframe(stocks)
+    dividends_df = transactions_dataframe(dividends)
     index = stock_ticker(stocks)
     columns = ['Total_held', 'Av_Buy_Price', 'Total_Spent', 'Total_Return', 'Current_Value', 'First_Purchase']
     portfolio_df = pd.DataFrame(index = index, columns = columns)
@@ -41,20 +42,28 @@ def portfolio_dataframe(stocks):
         total = 0
         average = 0
         date = datetime.today().date()
+        returned = 0
+        spent = 0
         for index, row in transactions_df[transactions_df.ticker == stock].iterrows():
             if row['type'] == 'buy':
                 average = ((total * average) + (row['volume'] * row['price'])) / (total + row['volume'])
                 total = total + row['volume']
-                portfolio_df.loc[stock, 'Total_Spent'] += row['volume'] * row['price']
+                spent += row['volume'] * row['price']
                 if row['date'] <= date:
                     date = row['date']
             elif row['type'] == 'sel':
                 total = total - row['volume']
-                portfolio_df.loc[stock, 'Total_Return'] += row['volume'] * row['price']
+                returned += row['volume'] * row['price']
             else:
                 print('Buy/Sell not specified')
+        for index, row in dividends_df[dividends_df.ticker == stock].iterrows():
+            returned += row['value']
+        value_now = round((total * si.get_live_price(stock)), 0)
         portfolio_df.loc[stock, 'Total_held'] = total
+        portfolio_df.loc[stock, 'Total_Spent'] = spent
+        portfolio_df.loc[stock, 'Total_Return'] = returned
         portfolio_df.loc[stock, 'Av_Buy_Price'] = average
         portfolio_df.loc[stock, 'First_Purchase'] = date
-        portfolio_df.loc[stock, 'Current_Value'] = round((total * si.get_live_price(stock)), 0)
+        portfolio_df.loc[stock, 'Current_Value'] = value_now
+        portfolio_df.loc[stock, 'Total_PL'] = value_now + returned - spent
     return portfolio_df
