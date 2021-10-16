@@ -40,30 +40,37 @@ def portfolio_dataframe(stocks, dividends):
         portfolio_df[col].values[:] = 0
     for stock in index:
         total = 0
+        average_local = 0
         average = 0
         date = datetime.today().date()
         returned = 0
         spent = 0
         for index, row in transactions_df[transactions_df.ticker == stock].iterrows():
             if row['type'] == 'buy':
-                average = ((total * average) + (row['volume'] * row['price'])) / (total + row['volume'])
+                average_local = ((total * average_local) + (row['volume'] * row['price'])) / (total + row['volume'])
+                average = ((total * average) + (row['volume'] * row['price'] / row['currency_con'])) / (total + row['volume'])
                 total = total + row['volume']
-                spent += row['volume'] * row['price']
+                spent += row['volume'] * row['price'] / row['currency_con']
                 if row['date'] <= date:
                     date = row['date']
             elif row['type'] == 'sel':
                 total = total - row['volume']
-                returned += row['volume'] * row['price']
+                returned += row['volume'] * row['price'] / row['currency_con']
             else:
                 print('Buy/Sell not specified')
+            currency = row['currency']
         for index, row in dividends_df[dividends_df.ticker == stock].iterrows():
-            returned += row['value']
-        value_now = round((total * si.get_live_price(stock)), 0)
-        portfolio_df.loc[stock, 'Total_held'] = total
-        portfolio_df.loc[stock, 'Total_Spent'] = spent
-        portfolio_df.loc[stock, 'Total_Return'] = returned
-        portfolio_df.loc[stock, 'Av_Buy_Price'] = average
+            returned += row['value'] / row['currency_con']
+        if(currency == 'EUR'):
+            value_now = round((total * si.get_live_price(stock)), 0)
+        else:
+            value_now = round((total * si.get_live_price(stock)), 0) / si.get_live_price(currency)
+        portfolio_df.loc[stock, 'Total_held'] = round(total, 2)
+        portfolio_df.loc[stock, 'Total_Spent'] = round(spent, 2)
+        portfolio_df.loc[stock, 'Total_Return'] = round(returned, 2)
+        portfolio_df.loc[stock, 'Av_Buy_Price_Local'] = round(average_local, 2)
+        portfolio_df.loc[stock, 'Av_Buy_Price'] = round(average, 2)
         portfolio_df.loc[stock, 'First_Purchase'] = date
-        portfolio_df.loc[stock, 'Current_Value'] = value_now
-        portfolio_df.loc[stock, 'Total_PL'] = value_now + returned - spent
+        portfolio_df.loc[stock, 'Current_Value'] = round(value_now, 2)
+        portfolio_df.loc[stock, 'Total_PL'] = round((value_now + returned - spent), 2)
     return portfolio_df
