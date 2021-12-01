@@ -265,3 +265,8 @@ def day6_2016(part1_input, code_length):
         part2_solution += sorted_dict[0][0]
         character_dict = {}
     return part1_solution, part2_solution
+
+def error(part1_input):
+    part1_solution = "Sorry, this puzzle hasn't been solved yet!"
+    part2_solution = "Sorry, this puzzle hasn't been solved yet!"
+    return part1_solution, part2_solution

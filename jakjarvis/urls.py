@@ -38,6 +38,9 @@ urlpatterns = [
     # Advent
     path('advent/', include('advent.urls')),
 
+    #Worttester
+    path('worttester/', include('worttester.urls')),
+
     # Plotly-dash
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
 ]

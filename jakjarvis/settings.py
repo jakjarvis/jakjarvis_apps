@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'projects',
     'car_client',
     'advent',
+    'worttester',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
 ]
 

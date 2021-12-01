@@ -1,0 +1,151 @@
+ValueError: time data '' does not match format '%Y-%m-%d'
+[22/Oct/2021 18:58:44] "GET /stock/portfolio/ HTTP/1.1" 200 3456
+[22/Oct/2021 18:58:44] "GET /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-5e7ebb064eea494eafc0467
+6589a1896/ HTTP/1.1" 200 1708
+[22/Oct/2021 18:58:44] "GET /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-5e7ebb064eea494eafc0467
+6589a1896/_dash-layout HTTP/1.1" 200 1650
+[22/Oct/2021 18:58:44] "GET /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-5e7ebb064eea494eafc0467
+6589a1896/_dash-dependencies HTTP/1.1" 200 231
+{'INR.F': '2021-05-13', 'RRU.F': '2020-12-01', 'EXW1.DE': '2021-05-05', 'EJT1.DE': '2021-07-02', '4507.T': '2021-
+03-01', 'WISE.L': '2021-07-28', 'Total': ''}
+2021-05-13
+[*********************100%***********************]  1 of 1 completed
+[*********************100%***********************]  1 of 1 completed
+2020-12-01
+Internal Server Error: /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-ceb14c8e1904418fb89b2fd3e7d7
+8235/_dash-update-component
+Traceback (most recent call last):
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django\core\handlers\exception.py", line 4
+7, in inner
+    response = get_response(request)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django\core\handlers\base.py", line 181, i
+n _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django\views\decorators\csrf.py", line 54,
+ in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django_plotly_dash\views.py", line 74, in
+update
+    return _update(request, ident, stateless, **kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django_plotly_dash\views.py", line 91, in
+_update
+    resp = app.dispatch_with_args(request_body, arg_map)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django_plotly_dash\dash_wrapper.py", line
+700, in dispatch_with_args
+    res = callback(*args, **argMap)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\dash\dash.py", line 1017, in add_context
+    output_value = func(*args, **kwargs)  # %% callback invoked %%
+  File "C:\Users\jakja\Documents\Python Scripts\Django\jakjarvis\stock\ticker.py", line 59, in update_graph
+    df2 = yf.download(tic, start = stock_dates[tic], end = end)/stock_prices[tic]
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\multi.py", line 122, in download
+    return shared._DFS[tickers[0]]
+KeyError: 'TOTAL'
+[22/Oct/2021 18:58:44,937] - Broken pipe from ('127.0.0.1', 64253)
+
+[*********************100%***********************]  1 of 1 completed
+2021-05-05
+[*********************100%***********************]  1 of 1 completed
+2021-07-02
+[*********************100%***********************]  1 of 1 completed
+2021-03-01
+[*********************100%***********************]  1 of 1 completed
+2021-07-28
+[*********************100%***********************]  1 of 1 completed
+
+Exception in thread Thread-17:
+Traceback (most recent call last):
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\multitasking\__init__.py", line 102, in _r
+un_via_pool
+    return callee(*args, **kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\multi.py", line 169, in _download
+_one_threaded
+    data = _download_one(ticker, start, end, auto_adjust, back_adjust,
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\multi.py", line 181, in _download
+_one
+    return Ticker(ticker).history(period=period, interval=interval,
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\base.py", line 123, in history
+    _time.strptime(str(start), '%Y-%m-%d')))
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\_strptime.py", line 562, in _strptime_time
+    tt = _strptime(data_string, format)[0]
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '' does not match format '%Y-%m-%d'
+[22/Oct/2021 18:59:32] "GET /stock/portfolio/ HTTP/1.1" 200 3456
+[22/Oct/2021 18:59:32] "GET /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-39ca5bee9b1a4773bb4af2d
+87850e811/ HTTP/1.1" 200 1708
+[22/Oct/2021 18:59:32] "GET /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-39ca5bee9b1a4773bb4af2d
+87850e811/_dash-dependencies HTTP/1.1" 200 231
+[22/Oct/2021 18:59:32] "GET /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-39ca5bee9b1a4773bb4af2d
+87850e811/_dash-layout HTTP/1.1" 200 1650
+{'INR.F': '2021-05-13', 'RRU.F': '2020-12-01', 'EXW1.DE': '2021-05-05', 'EJT1.DE': '2021-07-02', '4507.T': '2021-
+03-01', 'WISE.L': '2021-07-28', 'Total': ''}
+2021-05-13
+[*********************100%***********************]  1 of 1 completed
+2020-12-01
+[*********************100%***********************]  1 of 1 completed
+
+2021-05-05
+Internal Server Error: /stock/django_plotly_dash/app/ticker/initial/dpd-initial-args-5e7ebb064eea494eafc04676589a
+1896/_dash-update-component
+Traceback (most recent call last):
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django\core\handlers\exception.py", line 4
+7, in inner
+    response = get_response(request)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django\core\handlers\base.py", line 181, i
+n _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django\views\decorators\csrf.py", line 54,
+ in wrapped_view
+    return view_func(*args, **kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django_plotly_dash\views.py", line 74, in
+update
+    return _update(request, ident, stateless, **kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django_plotly_dash\views.py", line 91, in
+_update
+    resp = app.dispatch_with_args(request_body, arg_map)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\django_plotly_dash\dash_wrapper.py", line
+700, in dispatch_with_args
+    res = callback(*args, **argMap)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\dash\dash.py", line 1017, in add_context
+    output_value = func(*args, **kwargs)  # %% callback invoked %%
+  File "C:\Users\jakja\Documents\Python Scripts\Django\jakjarvis\stock\ticker.py", line 59, in update_graph
+    df2 = yf.download(tic, start = stock_dates[tic], end = end)/stock_prices[tic]
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\multi.py", line 122, in download
+    return shared._DFS[tickers[0]]
+KeyError: 'TOTAL'
+[22/Oct/2021 18:59:32,680] - Broken pipe from ('127.0.0.1', 64296)
+
+[*********************100%***********************]  1 of 1 completed
+2021-07-02
+[*********************100%***********************]  1 of 1 completed
+2021-03-01
+[*********************100%***********************]  1 of 1 completed
+2021-07-28
+[*********************100%***********************]  1 of 1 completed
+
+Exception in thread Thread-25:
+Traceback (most recent call last):
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\threading.py", line 932, in _bootstrap_inner
+    self.run()
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\threading.py", line 870, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\multitasking\__init__.py", line 102, in _r
+un_via_pool
+    return callee(*args, **kwargs)
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\multi.py", line 169, in _download
+_one_threaded
+    data = _download_one(ticker, start, end, auto_adjust, back_adjust,
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\multi.py", line 181, in _download
+_one
+    return Ticker(ticker).history(period=period, interval=interval,
+  File "C:\Users\jakja\anaconda3\envs\jakjarvis\apps\lib\site-packages\yfinance\base.py", line 123, in history
+    _time.strptime(str(start), '%Y-%m-%d')))
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\_strptime.py", line 562, in _strptime_time
+    tt = _strptime(data_string, format)[0]
+  File "C:\Users\jakja\AppData\Local\Programs\Python\Python38\lib\_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '' does not match format '%Y-%m-%d'
