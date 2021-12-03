@@ -47,6 +47,8 @@ def day2_2021(part1_input):
             print('Incorrect direction entered')
     part1_solution = depth * distance
 
+    return part1_solution, part2_solution
+
 def error(part1_input):
     part1_solution = "Sorry, this puzzle hasn't been solved yet!"
     part2_solution = "Sorry, this puzzle hasn't been solved yet!"
