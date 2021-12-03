@@ -42,6 +42,7 @@ def solution(year, day, part1_input, part2_input):
 
     elif year == "2021":
         if day == "1": solution1, solution2 = solution21.day1_2021(part1_input)
+        if day == "2": solution1, solution2 = solution21.day2_2021(part1_input)
         else: solution1, solution2 = solution21.error(part1_input)
 
 
