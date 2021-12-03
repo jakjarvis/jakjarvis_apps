@@ -45,7 +45,7 @@ def day2_2021(part1_input):
             aim -= int(input_list[direction + 1])
         else:
             print('Incorrect direction entered')
-    part1_solution = depth * distance
+    part2_solution = depth * distance
 
     return part1_solution, part2_solution
 
