@@ -2,18 +2,15 @@
 
 {% block content %}
 
-{{ error }}
-
-{{ stock.title }}
 <div class="text-start">
+    <h1>Register Dividend</h1>
+
+    <h3>{{ error }}</h3>
+
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success d-inline">Save</button>
-        <form method="POST" action="{% url 'deletestock' stock.id %}" class="d-inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
     </form>
     <a href="{% url 'portfolio' %}" class="btn btn-primary d-inline">Return to portfolio</a>
     <a href="{% url 'overview' %}" class="btn btn-primary">View Transactions</a>
