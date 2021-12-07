@@ -20,11 +20,14 @@ urlpatterns = [
 
     # View stocks
     path('', views.home, name='stockhome'),
-    path('create/', views.createstock, name='createstock'),
+    path('create/stock/', views.createstock, name='createstock'),
+    path('create/dividend/', views.createdividend, name='createdividend'),
     path('current/', views.currentstocks, name='currentstocks'),
     path('portfolio/', views.portfolio, name='portfolio'),
     path('stocks/<int:stock_pk>', views.viewstock, name='viewstock'),
+    path('dividends/<int:dividend_pk>', views.viewdividend, name='viewdividend'),
     path('stocks/<int:stock_pk>/delete', views.deletestock, name='deletestock'),
+    path('dividends/<int:dividend_pk>/delete', views.deletedividend, name='deletedividend'),
     path('overview/', views.overview, name='overview'),
 
     # Plotly-dash
