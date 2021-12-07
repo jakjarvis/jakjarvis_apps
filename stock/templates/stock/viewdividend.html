@@ -4,13 +4,13 @@
 
 {{ error }}
 
-{{ stock.title }}
+{{ dividend.title }}
 <div class="text-start">
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success d-inline">Save</button>
-        <form method="POST" action="{% url 'deletestock' stock.id %}" class="d-inline">
+        <form method="POST" action="{% url 'deletedividend' dividend.id %}" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>

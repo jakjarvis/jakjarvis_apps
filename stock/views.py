@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import StockForm
-from .models import Stock
-from .models import Dividend
+from .forms import StockForm, DivForm
+from .models import Stock, Dividend
 import stock.stock_evaluation as stock_evaluation
 import json
 from django.contrib.auth.decorators import login_required
@@ -52,6 +51,20 @@ def createstock(request):
             return render(request, 'stock/createstock.html', {'form': StockForm(), 'error':'Bad data passed in'})
 
 @login_required
+def createdividend(request):
+    if request.method == "GET":
+        return render(request, 'stock/createdividend.html', {'form': DivForm()})
+    else:
+        try:
+            form = DivForm(request.POST)
+            newdividend = form.save(commit=False)
+            newdividend.user = request.user
+            newdividend.save()
+            return redirect('portfolio')
+        except ValueError:
+            return render(request, 'stock/createdividend.html', {'form': DivForm(), 'error':'Bad data passed in'})
+
+@login_required
 def viewstock(request, stock_pk):
     stock = get_object_or_404(Stock, pk=stock_pk, user=request.user)
     if request.method == 'GET':
@@ -63,13 +76,34 @@ def viewstock(request, stock_pk):
             form.save()
             return redirect('portfolio')
         except ValueError:
-            return render(request, 'todo/viewstock.html', {'stock': stock, 'form': form, 'error': 'Bad Info'})
+            return render(request, 'stock/viewstock.html', {'stock': stock, 'form': form, 'error': 'Bad Info'})
+
+@login_required
+def viewdividend(request, dividend_pk):
+    dividend = get_object_or_404(Dividend, pk=dividend_pk, user=request.user)
+    if request.method == 'GET':
+        form = DivForm(instance=dividend)
+        return render(request, 'stock/viewdividend.html', {'dividend': dividend, 'form': form})
+    else:
+        try:
+            form = DivForm(request.POST, instance=dividend)
+            form.save()
+            return redirect('portfolio')
+        except ValueError:
+            return render(request, 'stock/viewdividend.html', {'dividend': dividend, 'form': form, 'error': 'Bad Info'})
 
 @login_required
 def deletestock(request, stock_pk):
     stock = get_object_or_404(Stock, pk=stock_pk, user=request.user)
     if request.method == 'POST':
         stock.delete()
+        return redirect('portfolio')
+
+@login_required
+def deletedividend(request, dividend_pk):
+    dividend = get_object_or_404(Dividend, pk=dividend_pk, user=request.user)
+    if request.method == 'POST':
+        dividend.delete()
         return redirect('portfolio')
 
 @login_required
@@ -84,6 +118,6 @@ def overview(request):
     data = []
     data = json.loads(json_portfolio)
 
-    return render(request, 'stock/overview.html', {'stocks':stocks, 'data':data})
+    return render(request, 'stock/overview.html', {'stocks':stocks, 'dividends':dividends, 'data':data})
 
 
