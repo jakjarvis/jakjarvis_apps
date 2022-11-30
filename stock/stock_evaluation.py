@@ -141,14 +141,14 @@ def portfolio_dataframe(stocks, dividends):
             * 100
         )
 
-    # portfolio_df.loc["Total", "Total_Spent"] = portfolio_df["Total_Spent"].sum()
-    # portfolio_df.loc["Total", "Total_Return"] = portfolio_df["Total_Return"].sum()
-    # portfolio_df.loc["Total", "Current_Value"] = portfolio_df["Current_Value"].sum()
-    # portfolio_df.loc["Total", "Total_PL"] = portfolio_df["Total_PL"].sum()
-    # portfolio_df.loc["Total", "Gain"] = (
-    #     round(portfolio_df["Total_PL"].sum() / portfolio_df["Total_Spent"].sum(), 3)
-    #     * 100
-    # )
+    portfolio_df.loc["Total", "Total_Spent"] = portfolio_df["Total_Spent"].sum()
+    portfolio_df.loc["Total", "Total_Return"] = portfolio_df["Total_Return"].sum()
+    portfolio_df.loc["Total", "Current_Value"] = portfolio_df["Current_Value"].sum()
+    portfolio_df.loc["Total", "Total_PL"] = portfolio_df["Total_PL"].sum()
+    portfolio_df.loc["Total", "Gain"] = (
+        round(portfolio_df["Total_PL"].sum() / portfolio_df["Total_Spent"].sum(), 3)
+        * 100
+    )
 
     portfolio_df.fillna("", inplace=True)
 
