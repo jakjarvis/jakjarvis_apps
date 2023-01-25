@@ -19,30 +19,25 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
+    path("admin/", admin.site.urls),
     # Auth
-    path('signup/', views.signupuser, name='signupuser'),
-    path('logout/', views.logoutuser, name='logoutuser'),
-    path('login/', views.loginuser, name='loginuser'),
-
+    path("signup/", views.signupuser, name="signupuser"),
+    path("logout/", views.logoutuser, name="logoutuser"),
+    path("login/", views.loginuser, name="loginuser"),
     # Projects
-    path('home/', views.home, name='home'),
-
+    path("home/", views.home, name="home"),
     # Stocks
-    path('stock/', include('stock.urls')),
-
+    path("stock/", include("stock.urls")),
     # Client
-    path('car_client/', include('car_client.urls')),
-
+    path("car_client/", include("car_client.urls")),
     # Advent
-    path('advent/', include('advent.urls')),
-
-    #Worttester
-    path('worttester/', include('worttester.urls')),
-
+    path("advent/", include("advent.urls")),
+    # Worttester
+    path("worttester/", include("worttester.urls")),
+    # Yahtzee
+    path("yahtzee/", include("yahtzee.urls")),
     # Plotly-dash
-    path('django_plotly_dash/', include('django_plotly_dash.urls')),
+    path("django_plotly_dash/", include("django_plotly_dash.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,1 +1,1 @@
-SECRET_KEY = ### Set this secret key when deploying
+SECRET_KEY = "saldfjhasldfjhasldfjhalsjkdfhasljdh"

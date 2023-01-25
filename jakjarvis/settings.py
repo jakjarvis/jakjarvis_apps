@@ -24,7 +24,7 @@ SECRET_KEY = secrets.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["jakjarvis.pythonanywhere.com"]
+ALLOWED_HOSTS = ["jakjarvis.pythonanywhere.com", "127.0.0.1"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "car_client",
     "advent",
     "worttester",
+    "yahtzee",
     "django_plotly_dash.apps.DjangoPlotlyDashConfig",
 ]
 
