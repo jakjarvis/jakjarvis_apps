@@ -49,6 +49,10 @@ table {
   border: 1px solid;
 }
 
+.player_name {
+  min-width: 80px;
+}
+
 .heading-line {
   font-size: 130%;
   font-weight: bold;

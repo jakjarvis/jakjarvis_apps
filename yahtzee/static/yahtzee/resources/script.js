@@ -16,13 +16,17 @@ const dice4El = document.querySelector(".dice4");
 const rollsCountEl = document.querySelector(".rolls-remaining");
 
 /* Player names */
-const player1Name = document.querySelector(".player1_name");
-const player2Name = document.querySelector(".player2_name");
+const player1NameEl = document.querySelector(".player1_name");
+const player2NameEl = document.querySelector(".player2_name");
+
+/* Submit Form */
+const form = document.getElementById("submit_form");
 
 /* DEFINE OBJECTS */
 
 const player1 = {
-  name: "player1",
+  name: player1Name,
+  scoresId: scores1Id,
   /* Top score fields */
   onesScore: document.querySelector(".onesP1"),
   twosScore: document.querySelector(".twosP1"),
@@ -49,7 +53,8 @@ const player1 = {
 };
 
 const player2 = {
-  name: "player2",
+  name: player2Name,
+  scoresId: scores2Id,
   /* Top score fields */
   onesScore: document.querySelector(".onesP2"),
   twosScore: document.querySelector(".twosP2"),
@@ -182,28 +187,6 @@ function randomiseDiceImage(diceElement) {
   diceElement.style.left = `${randWidth}vw`;
   diceElement.style.transform = `rotate(${randAngle}deg)`;
 }
-
-// function rollDice() {
-//   if (rollsLeft === 3) {
-//     switchPlayer();
-//   }
-//   for (let i = 0; i < 5; i++) {
-//     if (heldDice[i] === 0) {
-//       console.log(`Dice is ${i}`);
-//       const result = Math.trunc(Math.random() * 6) + 1;
-//       console.log(`Result is ${result}`);
-//       diceValues[i] = result;
-//       const diceElement = document.querySelector(`.dice${i}`);
-//       randomiseDiceImage(diceElement);
-//       diceElement.classList.remove("hidden");
-//       diceElement.src = `yahtzee/resources/images/dice-${diceValues[i]}.png`;
-//     }
-//   }
-//   rollsLeft -= 1;
-//   rollsCountEl.textContent = rollsLeft;
-//   numbers = numberArray();
-//   highlight();
-// }
 
 function rollDice() {
   if (rollsLeft === 3) {
@@ -401,12 +384,12 @@ function highlight() {
 function switchPlayer() {
   if (activePlayer === player1) {
     activePlayer = player2;
-    player2Name.classList.add("active");
-    player1Name.classList.remove("active");
+    player2NameEl.classList.add("active");
+    player1NameEl.classList.remove("active");
   } else {
     activePlayer = player1;
-    player1Name.classList.add("active");
-    player2Name.classList.remove("active");
+    player1NameEl.classList.add("active");
+    player2NameEl.classList.remove("active");
   }
   console.log(`Active player is ${activePlayer.name}`);
 
@@ -422,10 +405,12 @@ function refresh_listeners() {
           score += 1;
         }
         activePlayer.onesScore.textContent = score;
+        updateForm("ones", activePlayer.scoresId, score);
       }
       reset_dice();
     }
   });
+
   activePlayer.twosScore.addEventListener("click", function () {
     if (topSectionLegal(activePlayer.twosScore)) {
       let score = 0;
@@ -434,6 +419,7 @@ function refresh_listeners() {
           score += 2;
         }
         activePlayer.twosScore.textContent = score;
+        updateForm("twos", activePlayer.scoresId, score);
       }
       reset_dice();
     }
@@ -446,6 +432,7 @@ function refresh_listeners() {
           score += 3;
         }
         activePlayer.threesScore.textContent = score;
+        updateForm("threes", activePlayer.scoresId, score);
       }
       reset_dice();
     }
@@ -458,6 +445,7 @@ function refresh_listeners() {
           score += 4;
         }
         activePlayer.foursScore.textContent = score;
+        updateForm("fours", activePlayer.scoresId, score);
       }
       reset_dice();
     }
@@ -470,6 +458,7 @@ function refresh_listeners() {
           score += 5;
         }
         activePlayer.fivesScore.textContent = score;
+        updateForm("fives", activePlayer.scoresId, score);
       }
       reset_dice();
     }
@@ -482,6 +471,7 @@ function refresh_listeners() {
           score += 6;
         }
         activePlayer.sixesScore.textContent = score;
+        updateForm("sixes", activePlayer.scoresId, score);
       }
       reset_dice();
     }
@@ -495,9 +485,11 @@ function refresh_listeners() {
         score += diceValues[i];
       }
       activePlayer.kind3Score.textContent = score;
+      updateForm("three_kind", activePlayer.scoresId, score);
       reset_dice();
     } else if (activePlayer.kind3Score.textContent === "") {
       activePlayer.kind3Score.textContent = 0;
+      updateForm("ones", activePlayer.scoresId, 0);
       reset_dice();
     }
   });
@@ -509,9 +501,11 @@ function refresh_listeners() {
         score += diceValues[i];
       }
       activePlayer.kind4Score.textContent = score;
+      updateForm("four_kind", activePlayer.scoresId, score);
       reset_dice();
     } else if (activePlayer.kind4Score.textContent === "") {
       activePlayer.kind4Score.textContent = 0;
+      updateForm("four_kind", activePlayer.scoresId, 0);
       reset_dice();
     }
   });
@@ -519,9 +513,11 @@ function refresh_listeners() {
   activePlayer.houseScore.addEventListener("click", function () {
     if (fullHouseLegal(activePlayer.houseScore)) {
       activePlayer.houseScore.textContent = 25;
+      updateForm("full_house", activePlayer.scoresId, 25);
       reset_dice();
     } else if (activePlayer.houseScore.textContent === "") {
       activePlayer.houseScore.textContent = 0;
+      updateForm("full_house", activePlayer.scoresId, 0);
       reset_dice();
     }
   });
@@ -529,9 +525,11 @@ function refresh_listeners() {
   activePlayer.shortScore.addEventListener("click", function () {
     if (shortStraightLegal(activePlayer.shortScore)) {
       activePlayer.shortScore.textContent = 30;
+      updateForm("short_straight", activePlayer.scoresId, 30);
       reset_dice();
     } else if (activePlayer.shortScore.textContent === "") {
       activePlayer.shortScore.textContent = 0;
+      updateForm("short_straight", activePlayer.scoresId, 0);
       reset_dice();
     }
   });
@@ -539,9 +537,11 @@ function refresh_listeners() {
   activePlayer.longScore.addEventListener("click", function () {
     if (longStraightLegal(activePlayer.longScore)) {
       activePlayer.longScore.textContent = 40;
+      updateForm("long_straight", activePlayer.scoresId, 40);
       reset_dice();
     } else if (activePlayer.longScore.textContent === "") {
       activePlayer.longScore.textContent = 0;
+      updateForm("long_straight", activePlayer.scoresId, 0);
       reset_dice();
     }
   });
@@ -549,9 +549,11 @@ function refresh_listeners() {
   activePlayer.yahtzeeScore.addEventListener("click", function () {
     if (yahtzeeLegal(activePlayer.yahtzeeScore)) {
       activePlayer.yahtzeeScore.textContent = 50;
+      updateForm("yahtzee", activePlayer.scoresId, 50);
       reset_dice();
     } else if (activePlayer.yahtzeeScore.textContent === "") {
       activePlayer.yahtzeeScore.textContent = 0;
+      updateForm("yahtzee", activePlayer.scoresId, 0);
       reset_dice();
     }
   });
@@ -563,6 +565,7 @@ function refresh_listeners() {
         score += diceValues[i];
       }
       activePlayer.chanceScore.textContent = score;
+      updateForm("chance", activePlayer.scoresId, score);
       reset_dice();
     }
   });
@@ -604,3 +607,12 @@ function calculateScores(player) {
   player.bottomTotal.textContent = bottomScore;
   player.grandTotal.textContent = grandTotalScore;
 }
+
+// New function for django forms
+
+const updateForm = (field, scores_id, score) => {
+  document.getElementById("field").value = field;
+  document.getElementById("scores_id").value = scores_id;
+  document.getElementById("score").value = score;
+  form.submit();
+};

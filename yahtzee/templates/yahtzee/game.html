@@ -16,8 +16,10 @@
         <tr class="heading-line">
           <th>Catagory</th>
           <th>Scoring</th>
-          <th class="player1_name active">Player 1</th>
-          <th class="player2_name">Player 2</th>
+          <th class="player_name player1_name active">
+            {{ player1.username }}
+          </th>
+          <th class="player_name player2_name">{{ player2.username }}</th>
         </tr>
         <tr class="heading-line">
           <th>Top Section</th>
@@ -194,8 +196,18 @@
         <p class="rolls-remaining">3</p>
       </div>
     </div>
+    <form method="post" id="submit_form">
+      {% csrf_token %}
+      <input type="text" id="field" name="field" class="hidden" />
+      <input type="number" id="scores_id" name="scores_id" class="hidden" />
+      <input type="number" id="score" name="score" class="hidden" />
+    </form>
   </div>
   <script>
+    const player1Name = "{{ player1.username }}";
+    const player2Name = "{{ player2.username }}";
+    const scores1Id = "{{ scores1.id }}";
+    const scores2Id = "{{ scores2.id }}";
     var dice1src = "{% static 'yahtzee/resources/images/dice-1.png' %}";
     var dice2src = "{% static 'yahtzee/resources/images/dice-2.png' %}";
     var dice3src = "{% static 'yahtzee/resources/images/dice-3.png' %}";

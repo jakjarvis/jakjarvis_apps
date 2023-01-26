@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 
-from .forms import NewGame
+from .forms import NewGame, ScoreSubmit
 from .models import Scores, Game
 
 
@@ -20,10 +20,50 @@ def setup(request):
 
 def game(request, game_id):
     game = get_object_or_404(Game, pk=game_id)
+    player1 = game.player1
+    player2 = game.player2
     scores1 = game.scores1
     scores2 = game.scores2
+    if request.method == "POST":
+        form = ScoreSubmit(request.POST)
+        print(form)
+        form_values = processFormInput(str(form))
+        scores = Scores.objects.get(pk=form_values["scores_id"])
+        setattr(
+            scores,
+            form_values["field"],
+            form_values["score"],
+        )
+        scores.save()
+        print("Form contained: ", form_values)
+        print(
+            "New value of ",
+            form_values["field"],
+            " is ",
+            getattr(scores, form_values["field"]),
+        )
+    else:
+        form = ScoreSubmit()
     return render(
         request,
         "yahtzee/game.html",
-        {"game": game, "scores1": scores1, "scores2": scores2},
+        {
+            "game": game,
+            "player1": player1,
+            "player2": player2,
+            "scores1": scores1,
+            "scores2": scores2,
+        },
     )
+
+
+# For some reason that I haven't had time to look into, when the scores form is submitted, Django recieves the HTML object of the form itself, rather than just the values. This function is a quick and dirty solution for now:
+def processFormInput(formHTML):
+    form_parameters = {}
+    strings = formHTML.split("</tr>\n")
+    for string in strings:
+        sub_strings = string.split('name="')
+        name = sub_strings[1].split('"')[0]
+        value = sub_strings[1].split('value="')[1].split('"')[0]
+        form_parameters[name] = value
+    return form_parameters
