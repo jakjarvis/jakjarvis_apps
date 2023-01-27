@@ -16,16 +16,19 @@ const dice4El = document.querySelector(".dice4");
 const rollsCountEl = document.querySelector(".rolls-remaining");
 
 /* Player names */
-const player1NameEl = document.querySelector(".player1_name");
-const player2NameEl = document.querySelector(".player2_name");
+// const player1NameEl = document.querySelector(".player1_name");
+// const player2NameEl = document.querySelector(".player2_name");
 
 /* Submit Form */
 const form = document.getElementById("submit_form");
 
 /* DEFINE OBJECTS */
 
+const gameId = window.location.pathname.split("/yahtzee/")[1];
+
 const player1 = {
   name: player1Name,
+  nameEl: document.querySelector(".player1_name"),
   scoresId: scores1Id,
   /* Top score fields */
   onesScore: document.querySelector(".onesP1"),
@@ -48,12 +51,14 @@ const player1 = {
   topInitial: document.querySelector(".top_initialP1"),
   topBonus: document.querySelector(".top_bonusP1"),
   topTotal: document.querySelector(".top_totalP1"),
+  topTotalRepeat: document.querySelector(".top_totalP1_repeat"),
   bottomTotal: document.querySelector(".bottom_totalP1"),
   grandTotal: document.querySelector(".grand_totalP1"),
 };
 
 const player2 = {
   name: player2Name,
+  nameEl: document.querySelector(".player2_name"),
   scoresId: scores2Id,
   /* Top score fields */
   onesScore: document.querySelector(".onesP2"),
@@ -76,6 +81,7 @@ const player2 = {
   topInitial: document.querySelector(".top_initialP2"),
   topBonus: document.querySelector(".top_bonusP2"),
   topTotal: document.querySelector(".top_totalP2"),
+  topTotalRepeat: document.querySelector(".top_totalP2_repeat"),
   bottomTotal: document.querySelector(".bottom_totalP2"),
   grandTotal: document.querySelector(".grand_totalP2"),
 };
@@ -85,8 +91,7 @@ let diceValues = [1, 2, 3, 4, 5];
 let heldDice = [0, 0, 0, 0, 0];
 let rollsLeft = 3;
 let numbers = [0, 0, 0, 0, 0, 0];
-let activePlayer = player2;
-let turnsRemaining = 26;
+let activePlayer = eval(activePlayerRef);
 
 /* DEFINE FUNCTIONS */
 
@@ -189,9 +194,7 @@ function randomiseDiceImage(diceElement) {
 }
 
 function rollDice() {
-  if (rollsLeft === 3) {
-    switchPlayer();
-  }
+  refresh_listeners();
   for (let i = 0; i < 5; i++) {
     if (heldDice[i] === 0) {
       console.log(`Dice is ${i}`);
@@ -383,17 +386,10 @@ function highlight() {
 /* Switch player */
 function switchPlayer() {
   if (activePlayer === player1) {
-    activePlayer = player2;
-    player2NameEl.classList.add("active");
-    player1NameEl.classList.remove("active");
+    return "player2";
   } else {
-    activePlayer = player1;
-    player1NameEl.classList.add("active");
-    player2NameEl.classList.remove("active");
+    return "player1";
   }
-  console.log(`Active player is ${activePlayer.name}`);
-
-  refresh_listeners();
 }
 
 function refresh_listeners() {
@@ -614,5 +610,7 @@ const updateForm = (field, scores_id, score) => {
   document.getElementById("field").value = field;
   document.getElementById("scores_id").value = scores_id;
   document.getElementById("score").value = score;
+  document.getElementById("active_player").value = switchPlayer();
+  document.getElementById("turns_remaining").value = turnsRemaining - 1;
   form.submit();
 };

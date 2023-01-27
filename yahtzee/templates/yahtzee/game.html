@@ -16,9 +16,7 @@
         <tr class="heading-line">
           <th>Catagory</th>
           <th>Scoring</th>
-          <th class="player_name player1_name active">
-            {{ player1.username }}
-          </th>
+          <th class="player_name player1_name">{{ player1.username }}</th>
           <th class="player_name player2_name">{{ player2.username }}</th>
         </tr>
         <tr class="heading-line">
@@ -48,38 +46,38 @@
         <tr class="score-line">
           <th>4s</th>
           <th class="scoring">Sum of all fours thrown</th>
-          <th class="score foursP1"></th>
-          <th class="score foursP2"></th>
+          <th class="score foursP1">{{ scores1.fours }}</th>
+          <th class="score foursP2">{{ scores2.fours }}</th>
         </tr>
         <tr class="score-line">
           <th>5s</th>
           <th class="scoring">Sum of all fives thrown</th>
-          <th class="score fivesP1"></th>
-          <th class="score fivesP2"></th>
+          <th class="score fivesP1">{{ scores1.fives }}</th>
+          <th class="score fivesP2">{{ scores2.fives }}</th>
         </tr>
         <tr class="score-line">
           <th>6s</th>
           <th class="scoring">Sum of all sixes thrown</th>
-          <th class="score sixesP1"></th>
-          <th class="score sixesP2"></th>
+          <th class="score sixesP1">{{ scores1.sixes }}</th>
+          <th class="score sixesP2">{{ scores2.sixes }}</th>
         </tr>
         <tr class="total-line">
           <th>Score</th>
           <th class="scoring">--></th>
-          <th class="score top_initialP1"></th>
-          <th class="score top_initialP2"></th>
+          <th class="score top_initialP1">{{ scores1.top_score }}</th>
+          <th class="score top_initialP2">{{ scores2.top_score }}</th>
         </tr>
         <tr class="total-line">
           <th>Bonus</th>
           <th class="scoring">If top section score >= 63</th>
-          <th class="score top_bonusP1"></th>
-          <th class="score top_bonusP2"></th>
+          <th class="score top_bonusP1">{{ scores1.bonus }}</th>
+          <th class="score top_bonusP2">{{ scores2.bonus }}</th>
         </tr>
         <tr class="total-line">
           <th>Total</th>
           <th class="scoring">--></th>
-          <th class="score top_totalP1"></th>
-          <th class="score top_totalP2"></th>
+          <th class="score top_totalP1">{{ scores1.top_total }}</th>
+          <th class="score top_totalP2">{{ scores2.top_total }}</th>
         </tr>
         <tr class="heading-line">
           <th>Bottom Section</th>
@@ -90,62 +88,62 @@
         <tr class="score-line">
           <th>3 of a kind</th>
           <th class="scoring">Total of all dice</th>
-          <th class="score kind_3P1"></th>
-          <th class="score kind_3P2"></th>
+          <th class="score kind_3P1">{{ scores1.three_kind }}</th>
+          <th class="score kind_3P2">{{ scores2.three_kind }}</th>
         </tr>
         <tr class="score-line">
           <th>4 of a kind</th>
           <th class="scoring">Total of all dice</th>
-          <th class="score kind_4P1"></th>
-          <th class="score kind_4P2"></th>
+          <th class="score kind_4P1">{{ scores1.four_kind }}</th>
+          <th class="score kind_4P2">{{ scores2.four_kind }}</th>
         </tr>
         <tr class="score-line">
           <th>Full House</th>
           <th class="scoring">Score 25</th>
-          <th class="score full_houseP1"></th>
-          <th class="score full_houseP2"></th>
+          <th class="score full_houseP1">{{ scores1.full_house }}</th>
+          <th class="score full_houseP2">{{ scores2.full_house }}</th>
         </tr>
         <tr class="score-line">
           <th>Short Straight</th>
           <th class="scoring">Score 30</th>
-          <th class="score short_straightP1"></th>
-          <th class="score short_straightP2"></th>
+          <th class="score short_straightP1">{{ scores1.short_straight }}</th>
+          <th class="score short_straightP2">{{ scores2.short_straight }}</th>
         </tr>
         <tr class="score-line">
           <th>Long Straight</th>
           <th class="scoring">Score 40</th>
-          <th class="score long_straightP1"></th>
-          <th class="score long_straightP2"></th>
+          <th class="score long_straightP1">{{ scores1.long_straight }}</th>
+          <th class="score long_straightP2">{{ scores2.long_straight }}</th>
         </tr>
         <tr class="score-line">
           <th>Yahtzee</th>
           <th class="scoring">Score 50</th>
-          <th class="score yahtzeeP1"></th>
-          <th class="score yahtzeeP2"></th>
+          <th class="score yahtzeeP1">{{ scores1.yahtzee }}</th>
+          <th class="score yahtzeeP2">{{ scores2.yahtzee }}</th>
         </tr>
         <tr class="score-line">
           <th>Chance</th>
           <th class="scoring">Total of all dice</th>
-          <th class="score chanceP1"></th>
-          <th class="score chanceP2"></th>
+          <th class="score chanceP1">{{ scores1.chance }}</th>
+          <th class="score chanceP2">{{ scores2.chance }}</th>
         </tr>
         <tr class="total-line">
           <th>Bottom Section Total</th>
           <th class="scoring">--></th>
-          <th class="score bottom_totalP1"></th>
-          <th class="score bottom_totalP2"></th>
+          <th class="score bottom_totalP1">{{ scores1.bottom_total }}</th>
+          <th class="score bottom_totalP2">{{ scores2.bottom_total }}</th>
         </tr>
         <tr class="total-line">
           <th>Top Section Total</th>
           <th class="scoring">--></th>
-          <th class="score top_totalP1"></th>
-          <th class="score top_totalP2"></th>
+          <th class="score top_totalP1_repeat">{{ scores1.top_total }}</th>
+          <th class="score top_totalP2_repeat">{{ scores2.top_total }}</th>
         </tr>
         <tr class="grand-total-line">
           <th>Grand Total</th>
           <th class="scoring">--></th>
-          <th class="score grand_totalP1"></th>
-          <th class="score grand_totalP2"></th>
+          <th class="score grand_totalP1">{{ scores1.grand_total }}</th>
+          <th class="score grand_totalP2">{{ scores2.grand_total }}</th>
         </tr>
       </table>
     </div>
@@ -201,6 +199,18 @@
       <input type="text" id="field" name="field" class="hidden" />
       <input type="number" id="scores_id" name="scores_id" class="hidden" />
       <input type="number" id="score" name="score" class="hidden" />
+      <input
+        type="text"
+        id="active_player"
+        name="active_player"
+        class="hidden"
+      />
+      <input
+        type="number"
+        id="turns_remaining"
+        name="turns_remaining"
+        class="hidden"
+      />
     </form>
   </div>
   <script>
@@ -208,6 +218,8 @@
     const player2Name = "{{ player2.username }}";
     const scores1Id = "{{ scores1.id }}";
     const scores2Id = "{{ scores2.id }}";
+    let activePlayerRef = "{{ active_player }}";
+    let turnsRemaining = "{{ turns_remaining }}";
     var dice1src = "{% static 'yahtzee/resources/images/dice-1.png' %}";
     var dice2src = "{% static 'yahtzee/resources/images/dice-2.png' %}";
     var dice3src = "{% static 'yahtzee/resources/images/dice-3.png' %}";
@@ -216,4 +228,87 @@
     var dice6src = "{% static 'yahtzee/resources/images/dice-6.png' %}";
   </script>
   <script src="{% static 'yahtzee/resources/script.js' %}"></script>
+  <script>
+    const removeNones = (score) => {
+      if (score == "None") {
+        return "";
+      } else {
+        return score;
+      }
+    };
+    const displayScores1 = () => {
+      player1.onesScore.textContent = removeNones("{{ scores1.ones }}");
+      player1.twosScore.textContent = removeNones("{{ scores1.twos }}");
+      player1.threesScore.textContent = removeNones("{{ scores1.threes }}");
+      player1.foursScore.textContent = removeNones("{{ scores1.fours }}");
+      player1.fivesScore.textContent = removeNones("{{ scores1.fives }}");
+      player1.sixesScore.textContent = removeNones("{{ scores1.sixes }}");
+
+      /* Bottom score fields */
+      player1.kind3Score.textContent = removeNones("{{ scores1.three_kind }}");
+      player1.kind4Score.textContent = removeNones("{{ scores1.four_kind }}");
+      player1.houseScore.textContent = removeNones("{{ scores1.full_house }}");
+      player1.shortScore.textContent = removeNones(
+        "{{ scores1.short_straight }}"
+      );
+      player1.longScore.textContent = removeNones(
+        "{{ scores1.long_straight }}"
+      );
+      player1.yahtzeeScore.textContent = removeNones("{{ scores1.yahtzee }}");
+      player1.chanceScore.textContent = removeNones("{{ scores1.chance }}");
+
+      /* Total score fields */
+      player1.topInitial.textContent = removeNones("{{ scores1.top_score }}");
+      player1.topBonus.textContent = removeNones("{{ scores1.bonus }}");
+      player1.topTotal.textContent = removeNones("{{ scores1.top_total }}");
+      player1.topTotalRepeat.textContent = removeNones(
+        "{{ scores1.top_total }}"
+      );
+      player1.bottomTotal.textContent = removeNones(
+        "{{ scores1.bottom_total }}"
+      );
+      player1.grandTotal.textContent = removeNones("{{ scores1.grand_total }}");
+    };
+
+    const displayScores2 = () => {
+      player2.onesScore.textContent = removeNones("{{ scores2.ones }}");
+      player2.twosScore.textContent = removeNones("{{ scores2.twos }}");
+      player2.threesScore.textContent = removeNones("{{ scores2.threes }}");
+      player2.foursScore.textContent = removeNones("{{ scores2.fours }}");
+      player2.fivesScore.textContent = removeNones("{{ scores2.fives }}");
+      player2.sixesScore.textContent = removeNones("{{ scores2.sixes }}");
+
+      /* Bottom score fields */
+      player2.kind3Score.textContent = removeNones("{{ scores2.three_kind }}");
+      player2.kind4Score.textContent = removeNones("{{ scores2.four_kind }}");
+      player2.houseScore.textContent = removeNones("{{ scores2.full_house }}");
+      player2.shortScore.textContent = removeNones(
+        "{{ scores2.short_straight }}"
+      );
+      player2.longScore.textContent = removeNones(
+        "{{ scores2.long_straight }}"
+      );
+      player2.yahtzeeScore.textContent = removeNones("{{ scores2.yahtzee }}");
+      player2.chanceScore.textContent = removeNones("{{ scores2.chance }}");
+
+      /* Total score fields */
+      player2.topInitial.textContent = removeNones("{{ scores2.top_score }}");
+      player2.topBonus.textContent = removeNones("{{ scores2.bonus }}");
+      player2.topTotal.textContent = removeNones("{{ scores2.top_total }}");
+      player2.topTotalRepeat.textContent = removeNones(
+        "{{ scores2.top_total }}"
+      );
+      player2.bottomTotal.textContent = removeNones(
+        "{{ scores2.bottom_total }}"
+      );
+      player2.grandTotal.textContent = removeNones("{{ scores2.grand_total }}");
+    };
+
+    window.onload = function () {
+      displayScores1();
+      displayScores2();
+      eval(activePlayer).nameEl.classList.add("active");
+      console.log("Turns remianing: ", turnsRemaining);
+    };
+  </script>
 </body>

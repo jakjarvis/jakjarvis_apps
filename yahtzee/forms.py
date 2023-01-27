@@ -32,3 +32,5 @@ class ScoreSubmit(forms.Form):
     scores_id = forms.IntegerField()
     score = forms.IntegerField()
     field = forms.CharField(max_length=30)
+    active_player = forms.CharField(max_length=10)
+    turns_remaining = forms.IntegerField()

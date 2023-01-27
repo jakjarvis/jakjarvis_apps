@@ -24,6 +24,8 @@ def game(request, game_id):
     player2 = game.player2
     scores1 = game.scores1
     scores2 = game.scores2
+    active_player = game.active_player
+    turns_remaining = game.turns_remaining
     if request.method == "POST":
         form = ScoreSubmit(request.POST)
         print(form)
@@ -35,6 +37,9 @@ def game(request, game_id):
             form_values["score"],
         )
         scores.save()
+        game.active_player = form_values["active_player"]
+        game.turns_remaining = form_values["turns_remaining"]
+        game.save()
         print("Form contained: ", form_values)
         print(
             "New value of ",
@@ -53,6 +58,8 @@ def game(request, game_id):
             "player2": player2,
             "scores1": scores1,
             "scores2": scores2,
+            "active_player": active_player,
+            "turns_remaining": turns_remaining,
         },
     )
 
@@ -62,6 +69,7 @@ def processFormInput(formHTML):
     form_parameters = {}
     strings = formHTML.split("</tr>\n")
     for string in strings:
+        print(string)
         sub_strings = string.split('name="')
         name = sub_strings[1].split('"')[0]
         value = sub_strings[1].split('value="')[1].split('"')[0]

@@ -44,4 +44,6 @@ class Game(models.Model):
     scores2 = models.ForeignKey(
         Scores, on_delete=models.CASCADE, related_name="player2scores", blank=True
     )
+    active_player = models.CharField(max_length=10, default="player1")
+    turns_remaining = models.IntegerField(default=26)
     completed = models.BooleanField(default=False)
