@@ -19,13 +19,15 @@ def setup(request):
 
 
 def game(request, game_id):
-    game = get_object_or_404(Game, pk=game_id)
-    player1 = game.player1
-    player2 = game.player2
-    scores1 = game.scores1
-    scores2 = game.scores2
-    active_player = game.active_player
-    turns_remaining = game.turns_remaining
+    (
+        game,
+        player1,
+        player2,
+        scores1,
+        scores2,
+        active_player,
+        turns_remaining,
+    ) = get_values(game_id)
     if request.method == "POST":
         form = ScoreSubmit(request.POST)
         print(form)
@@ -40,6 +42,15 @@ def game(request, game_id):
         game.active_player = form_values["active_player"]
         game.turns_remaining = form_values["turns_remaining"]
         game.save()
+        (
+            game,
+            player1,
+            player2,
+            scores1,
+            scores2,
+            active_player,
+            turns_remaining,
+        ) = get_values(game_id)
         print("Form contained: ", form_values)
         print(
             "New value of ",
@@ -62,6 +73,17 @@ def game(request, game_id):
             "turns_remaining": turns_remaining,
         },
     )
+
+
+def get_values(game_id):
+    game = get_object_or_404(Game, pk=game_id)
+    player1 = game.player1
+    player2 = game.player2
+    scores1 = game.scores1
+    scores2 = game.scores2
+    active_player = game.active_player
+    turns_remaining = game.turns_remaining
+    return game, player1, player2, scores1, scores2, active_player, turns_remaining
 
 
 # For some reason that I haven't had time to look into, when the scores form is submitted, Django recieves the HTML object of the form itself, rather than just the values. This function is a quick and dirty solution for now:
