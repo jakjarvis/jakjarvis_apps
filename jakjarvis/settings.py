@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "advent",
     "worttester",
     "yahtzee",
+    "yahtzee_api",
+    "rest_framework",
     "django_plotly_dash.apps.DjangoPlotlyDashConfig",
 ]
 
