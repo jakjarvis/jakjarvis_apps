@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     "yahtzee_api",
     "rest_framework",
     "django_plotly_dash.apps.DjangoPlotlyDashConfig",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,6 +61,22 @@ MIDDLEWARE = [
     # For plotly-dash functionality
     "django_plotly_dash.middleware.BaseMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
 ]
 
 ROOT_URLCONF = "jakjarvis.urls"

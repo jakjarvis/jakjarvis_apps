@@ -33,17 +33,28 @@ class Scores(models.Model):
     objects = ScoresManager()
 
 
+class GameManager(models.Manager):
+    def create_game(self):
+        game = self.create(
+            player1=User.objects.get(username="Guest"),
+            player2=User.objects.get(username="Guest"),
+            scores1=Scores.objects.create_scores(),
+            scores2=Scores.objects.create_scores(),
+        )
+        return game
+
+
 class Game(models.Model):
     player1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="player1")
-    player2 = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="player2", blank=True
-    )
+    player2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="player2")
     scores1 = models.ForeignKey(
         Scores, on_delete=models.CASCADE, related_name="player1scores"
     )
     scores2 = models.ForeignKey(
-        Scores, on_delete=models.CASCADE, related_name="player2scores", blank=True
+        Scores, on_delete=models.CASCADE, related_name="player2scores"
     )
     active_player = models.CharField(max_length=10, default="player1")
     turns_remaining = models.IntegerField(default=26)
     completed = models.BooleanField(default=False)
+
+    objects = GameManager()
