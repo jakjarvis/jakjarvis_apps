@@ -86,7 +86,6 @@ class RetrieveUpdateScores(generics.RetrieveUpdateAPIView):
 
 class CreateGame(APIView):
     def post(self, request):
-        print(request.data["player1"])
 
         real_users = [False, False]
 
@@ -109,6 +108,6 @@ class CreateGame(APIView):
 
         serializer = GameSerializer(Game.objects.get(id=new_game.id))
 
-        response = json.dumps({"game_id": new_game.id, "user_array": real_users})
+        response = {"game_id": new_game.id, "user_array": real_users}
 
         return Response(response)
