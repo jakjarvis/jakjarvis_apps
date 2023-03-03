@@ -24,7 +24,13 @@ SECRET_KEY = secrets.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["apps.jakjarvis.com", "127.0.0.1"]
+ALLOWED_HOSTS = [
+    "http://localhost:3000",
+    "127.0.0.1",
+    "yahtzee.jakjarvis.com",
+    "apps.jakjarvis.com",
+    "master--candid-panda-4e1608.netlify.app",
+]
 
 
 # Application definition
@@ -65,6 +71,10 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://127.0.0.1",
+    "https://apps.jakjarvis.com",
+    "https://yahtzee.jakjarvis.com",
+    "https://master--candid-panda-4e1608.netlify.app",
 ]
 
 CORS_ALLOW_HEADERS = [
