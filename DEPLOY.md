@@ -3,7 +3,7 @@
 This project is hosted by Python Anywhere:
 https://www.pythonanywhere.com/user/jakjarvis/
 
-The current setup of the project in Python Anywhere is rather manual - no CI/CD (although this is apparently possible, currently working on it).
+The current setup of the project in Python Anywhere is rather manual - no CI/CD (although this is apparently possible, currently working on).
 
 Small changes to files can be managed by deleting and reuploading the file in the Files tab, larger changes are usually handled by deleting the whole repo and recloning it using the Console.
 
