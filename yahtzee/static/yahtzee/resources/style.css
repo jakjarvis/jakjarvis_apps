@@ -1,9 +1,12 @@
+@font-face {
+  font-family: Luminari;
+  src: url("Luminari-Regular.ttf");
+}
+
 body {
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("images/pexels-barnabas-davoti-11556304.jpg");
   background-size: cover;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   text-align: center;
   font-family: "Luminari", sans-serif;
 }
