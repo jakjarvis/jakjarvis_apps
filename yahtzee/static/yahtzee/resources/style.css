@@ -17,6 +17,42 @@ body {
   text-align: center;
 }
 
+.btn-modal {
+  margin-bottom: 50px;
+}
+
+.modal {
+  position: absolute;
+  top: 25vh;
+  left: 25vw;
+  width: 50vw;
+  height: 50vh;
+  border-style: solid;
+  background-color: rgb(124, 184, 219);
+  border-radius: 2vh;
+}
+
+.modal_close {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 25px;
+  height: 25px;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 1px;
+  z-index: 10;
+}
+
+.modal_text {
+  position: relative;
+  font-family: "Courier New", Courier, monospace;
+  top: 1vh;
+  left: 1vw;
+  width: 48vw;
+  height: 48vh;
+}
+
 .game_board {
   display: flex;
   justify-content: center;

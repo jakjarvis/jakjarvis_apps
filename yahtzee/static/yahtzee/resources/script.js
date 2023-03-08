@@ -1,7 +1,12 @@
 "use strict";
 
 /* DEFINE ELEMENTS */
+/* Modal */
+const modal = document.querySelector(".modal");
+
 /* Buttons */
+const modalBtn = document.querySelector(".btn-modal");
+const modalClose = document.querySelector(".modal_close");
 const rollBtn = document.querySelector(".btn-roll");
 const resetBtn = document.querySelector(".btn-reset");
 
@@ -94,6 +99,13 @@ let numbers = [0, 0, 0, 0, 0, 0];
 let activePlayer = eval(activePlayerRef);
 
 /* DEFINE FUNCTIONS */
+/*Toggle modal*/
+modalBtn.addEventListener("click", function () {
+  modal.classList.toggle("hidden");
+});
+modalClose.addEventListener("click", function () {
+  modal.classList.toggle("hidden");
+});
 
 /* Reset Game */
 resetBtn.addEventListener("click", function () {
