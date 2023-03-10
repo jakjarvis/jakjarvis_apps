@@ -5,6 +5,10 @@ from .forms import NewGame, ScoreSubmit
 from .models import Scores, Game
 
 
+def version(request):
+    return render(request, "yahtzee/version.html")
+
+
 def setup(request):
     if request.method == "POST":
         form = NewGame(request.POST)
