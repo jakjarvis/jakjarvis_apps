@@ -1,26 +1,31 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<head>
+  {% block head %}
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+  />
+  {% endblock %}
+</head>
 
-<div class = "container">
+<div class="container">
+  <div class="text-end auth_bar" style="margin-top: 10px">
+    {% if user.is_authenticated %} Logged In as {{ user.username }}
 
-    <div class="text-end" style="margin-top:10px">
-        {% if user.is_authenticated %}
+    <form action="{% url 'logoutuser' %}" method="POST">
+      {% csrf_token %}
+      <a href="{% url 'home' %}" class="btn btn-primary">Back to Apps</a>
+      <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
 
-        Logged In as {{ user.username }}
+    {% else %}
 
-        <form action="{% url 'logoutuser' %}" method="POST">
-            {% csrf_token %}
-            <a href="{% url 'home' %}" class="btn btn-primary">Back to Apps</a>
-            <button type="submit" class="btn btn-primary">Logout</button>
-        </form>
+    <a href="{% url 'signupuser' %}" class="btn btn-primary">Sign Up</a>
+    <a href="{% url 'loginuser' %}" class="btn btn-primary">Log In</a>
 
-        {% else %}
+    {% endif %}
+  </div>
 
-        <a href="{% url 'signupuser' %}" class="btn btn-primary">Sign Up</a>
-        <a href="{% url 'loginuser' %}" class="btn btn-primary">Log In</a>
-
-        {% endif %}
-    </div>
-
-    {% block content %}{% endblock %}
-
+  {% block content %}{% endblock %}
 </div>

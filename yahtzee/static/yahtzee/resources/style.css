@@ -11,6 +11,16 @@ body {
   font-family: "Luminari", sans-serif;
 }
 
+/* Authentication buttons */
+.auth_bar {
+  text-align: right;
+}
+
+a.btn:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* Board layout */
 .title_bar {
   width: 100%;
@@ -30,6 +40,7 @@ body {
   border-style: solid;
   background-color: rgb(124, 184, 219);
   border-radius: 2vh;
+  z-index: 10;
 }
 
 .modal_close {
@@ -41,7 +52,6 @@ body {
   border-style: solid;
   border-radius: 10px;
   border-width: 1px;
-  z-index: 10;
 }
 
 .modal_text {

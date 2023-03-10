@@ -1,8 +1,4 @@
-{% load static %}
-<head>
-  <title>Yahtzee!</title>
-  <link rel="stylesheet" href="{% static 'yahtzee/resources/style.css' %}" />
-</head>
+{% extends 'yahtzee/base.html' %} {% load static %} {% block content %}
 
 <body>
   <div class="title_bar">
@@ -35,7 +31,7 @@
         Frontent for the application, so that only the relevent DOM elements
         were updated each time:
       </p>
-      <a href="yahtzee.jakjarvis.com/setup">Yahtzee V3</a>
+      <a href="https://yahtzee.jakjarvis.com/setup">Yahtzee V3</a>
     </div>
   </div>
   <div class="game_board">
@@ -340,3 +336,4 @@
     };
   </script>
 </body>
+{% endblock %}
