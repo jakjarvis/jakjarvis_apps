@@ -29,20 +29,22 @@ body {
 
 .modal {
   position: absolute;
-  top: 25vh;
-  left: 25vw;
-  width: 50vw;
-  height: 50vh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 440px;
   border-style: solid;
   background-color: rgb(124, 184, 219);
+  color: black;
   border-radius: 2vh;
   z-index: 10;
 }
 
 .modal_close {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: 20px;
+  right: 20px;
   width: 25px;
   height: 25px;
   border-style: solid;
@@ -53,10 +55,10 @@ body {
 .modal_text {
   position: relative;
   font-family: "Courier New", Courier, monospace;
-  top: 1vh;
-  left: 1vw;
-  width: 48vw;
-  height: 48vh;
+  top: 20px;
+  left: 20px;
+  width: 760px;
+  height: 400px;
 }
 
 .game_board {
@@ -92,6 +94,7 @@ body {
 
 table {
   border: 1px solid;
+  color: #693702;
 }
 
 .player_name {
