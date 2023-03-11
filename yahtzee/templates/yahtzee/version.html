@@ -1,36 +1,61 @@
 {% extends 'yahtzee/base.html' %} {% load static %} {% block content %}
 <div class="version_screen">
   <h1>Select a Version</h1>
+  <div class="version">
+    <img
+      src="{% static 'yahtzee/resources/images/html_logo.png' %}"
+      alt="HTML Logo"
+      class="version_logo"
+    />
+    <div class="version_body">
+      <h3>Version 1</h3>
+      <p>
+        The initial release of the Yahtzee webapp, a static website with
+        functionality provided in the browser by javascript. There is no ability
+        to save game.
+      </p>
+      <a href="https://www.jakjarvis.com/yahtzee" class="btn">Play now!</a>
+    </div>
+  </div>
 
-  <div>
-    <h3>Version 1</h3>
-    <p>
-      Initial release, a static website with functionality provided in the
-      browser by javascript. No ability to save game.
-    </p>
-    <a href="https://www.jakjarvis.com/yahtzee" class="btn">Play now!</a>
+  <br />
+  <div class="version">
+    <img
+      src="{% static 'yahtzee/resources/images/django_logo.png' %}"
+      alt="Django Logo"
+      class="version_logo"
+    />
+    <div class="version_body">
+      <h3>Version 2</h3>
+      <p>
+        A subsequent release, part of the apps.jakjarvis suite of Django apps.
+        This app uses the same javascript frontend but retrieves the score data
+        from an sqlite database provided by the django backend. Games can be
+        left and reloaded in progress, but the resultant page reloading leads to
+        some page flashing.
+      </p>
+      <a href="https://apps.jakjarvis.com/yahtzee/setup" class="btn"
+        >Play now!</a
+      >
+    </div>
   </div>
-  <br /><br />
-  <div>
-    <h3>Version 2</h3>
-    <p>
-      Subsequent release, part of the apps.jakjarvis suite of Django apps. This
-      app uses the same javascript front end but sources the score data from a
-      mysql database provided by the django backend. Games can be left and
-      reloaded in progress, but page reloading leads to some page flashing.
-    </p>
-    <a href="https://apps.jakjarvis.com/yahtzee/setup" class="btn">Play now!</a>
-  </div>
-  <br /><br />
-  <div>
-    <h3>Version 3</h3>
-    <p>
-      Subsequent release, features a React frontend which retrieves the game and
-      score data from REST APIs built into the Django backend from version 2.
-      React's improved DOM manipulation reduces page flashing when data is
-      updated.
-    </p>
-    <a href="https://yahtzee.jakjarvis.com/setup" class="btn">Play now!</a>
+  <br />
+  <div class="version">
+    <img
+      src="{% static 'yahtzee/resources/images/react_logo.png' %}"
+      alt="React Logo"
+      class="version_logo"
+    />
+    <div class="version_body">
+      <h3>Version 3</h3>
+      <p>
+        A further release, featuring a React frontend which retrieves the game
+        and score data from REST APIs built into the Django backend from version
+        2. React's improved DOM manipulation reduces page flashing when data is
+        updated.
+      </p>
+      <a href="https://yahtzee.jakjarvis.com/setup" class="btn">Play now!</a>
+    </div>
   </div>
 </div>
 {% endblock %}
