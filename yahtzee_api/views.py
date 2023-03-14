@@ -24,20 +24,12 @@ class RetrieveUpdateGameState(APIView):
         ## Outdated code - this could do with refactoring to change filter for just game.player1.username. However this will result in refactor on the front end to expect responses not to be in list form.
         pk = target_game.id
         response = {
-            "player1_name": (
-                game.player1.username for game in Game.objects.filter(id=pk)
-            ),
-            "player2_name": (
-                game.player2.username for game in Game.objects.filter(id=pk)
-            ),
-            "scores1_id": (game.scores1.id for game in Game.objects.filter(id=pk)),
-            "scores2_id": (game.scores2.id for game in Game.objects.filter(id=pk)),
-            "active_player": (
-                game.active_player for game in Game.objects.filter(id=pk)
-            ),
-            "turns_remaining": (
-                game.turns_remaining for game in Game.objects.filter(id=pk)
-            ),
+            "player1_name": target_game.player1.username,
+            "player2_name": target_game.player2.username,
+            "scores1_id": target_game.scores1.id,
+            "scores2_id": target_game.scores2.id,
+            "active_player": target_game.active_player,
+            "turns_remaining": target_game.turns_remaining,
         }
         return Response(response)
 
