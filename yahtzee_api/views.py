@@ -9,6 +9,7 @@ from .serializers import GameSerializer, ScoresSerializer
 from yahtzee.models import Game, Scores
 from django.contrib.auth.models import User
 from yahtzee.forms import NewGame
+from django.http import Http404
 
 # Create your views here.
 
@@ -16,9 +17,12 @@ from yahtzee.forms import NewGame
 class RetrieveUpdateGameState(APIView):
     def get(self, request, *args, **kwargs):
         try:
-            pk = self.kwargs["pk"]
+            target_game = Game.objects.get(id=(self.kwargs["pk"]))
         except:
-            return Response("No id")
+            raise Http404
+
+        ## Outdated code - this could do with refactoring to change filter for just game.player1.username. However this will result in refactor on the front end to expect responses not to be in list form.
+        pk = target_game.id
         response = {
             "player1_name": (
                 game.player1.username for game in Game.objects.filter(id=pk)
