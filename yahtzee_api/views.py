@@ -9,7 +9,8 @@ from .serializers import GameSerializer, ScoresSerializer
 from yahtzee.models import Game, Scores
 from django.contrib.auth.models import User
 from yahtzee.forms import NewGame
-from django.http import Http404
+from django.http import Http404, HttpResponseBadRequest
+from django.core.exceptions import ValidationError
 
 # Create your views here.
 
@@ -41,14 +42,25 @@ class RetrieveUpdateGameState(APIView):
         game = Game.objects.get(id=pk)
         data = request.data
 
+        if len(set(data.keys()) - set(["active_player", "turns_remaining"])) > 0:
+            return HttpResponseBadRequest(
+                "Only accepts 'active_player' and 'turns_remaining' as inputs"
+            )
+
         if data.get("active_player") is not None:
             game.active_player = data.get("active_player")
         if data.get("turns_remaining") is not None:
             game.turns_remaining = data.get("turns_remaining")
         game.save()
-        serializer = GameSerializer(game)
-
-        return Response(serializer.data)
+        response = {
+            "player1_name": game.player1.username,
+            "player2_name": game.player2.username,
+            "scores1_id": game.scores1.id,
+            "scores2_id": game.scores2.id,
+            "active_player": game.active_player,
+            "turns_remaining": game.turns_remaining,
+        }
+        return Response(response)
 
 
 class RetrieveUpdateScores(generics.RetrieveUpdateAPIView):
@@ -58,26 +70,16 @@ class RetrieveUpdateScores(generics.RetrieveUpdateAPIView):
         return Scores.objects.all()
 
     def perform_update(self, serializer):
+        if (
+            len(
+                set(self.request.data.keys())
+                - set([f.name for f in Scores._meta.fields])
+            )
+            > 0
+        ):
+            raise ValidationError("Invalid score field")
+
         serializer.save()
-
-
-# class CreateGame(generics.CreateAPIView):
-#     print("New Game")
-
-#     serializer_class = GameSerializer
-
-#     def perform_create(self, serializer):
-#         if User.objects.filter(user=self.request.player1).exists():
-#             player1 = self.request.player1
-#         else:
-#             player1 = "Guest"
-
-#         if User.objects.filter(user=self.request.player2).exists():
-#             player2 = self.request.player2
-#         else:
-#             player2 = "Guest"
-
-#         serializer.save(player1=player1, player2=player2)
 
 
 class CreateGame(APIView):
