@@ -1,39 +1,6 @@
-{% extends 'yahtzee/base.html' %} {% load static %} {% block content %}
+{% extends 'yahtzee/base.html' %} {% load static %} {% block body %}
 
 <body>
-  <div class="title_bar">
-    <h1>Yahtzee!</h1>
-    <button class="btn btn-modal">About</button>
-  </div>
-  <div class="modal hidden">
-    <button class="modal_close">X</button>
-    <div class="modal_text">
-      <h3 class="modal_title">Yahtzee V2 - Overview</h3>
-      <p>
-        This updated version of yahtzee is written as a Django (Python)
-        application. This incorporates a database, allowing games to be saved
-        and returned to at a later time. The game is served to the browser via
-        html templates, modeled on V1 of the game, but with data taken from the
-        database.
-      </p>
-      <p>
-        Players can:<br />- log in as a user (of the jakjarvis apps suite) or
-        play as a Guest<br />- setup a game between two registered users<br />-
-        return to the unique url for their game at any time
-      </p>
-      <a href="https://github.com/jakjarvis/jakjarvis_apps/tree/main/yahtzee"
-        >Source Code</a
-      >
-      <p>
-        As it is best practice that all rendered data comes from the source
-        database, the webpage is reloaded each time a new score is added,
-        resulting in page flashing. To remove this issue, I created a React
-        Frontent for the application, so that only the relevent DOM elements
-        were updated each time:
-      </p>
-      <a href="https://yahtzee.jakjarvis.com/setup">Yahtzee V3</a>
-    </div>
-  </div>
   <div class="game_board">
     <div class="score_zone">
       <table class="score_card">
